@@ -6,11 +6,16 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:28:19 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/05/16 18:44:37 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/05/16 19:46:25 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+int	conversion(const char **s, int *len, va_list *ap)
+{
+	int	*
+}
 
 int	ft_printf(const char *format, ...)
 {
@@ -23,19 +28,18 @@ int	ft_printf(const char *format, ...)
 	len = 0;
 	while (format[i])
 	{
-		if (format[i] != '\\' && format[i] != '%')
-			i++;
-		else
+		if (format[i] == '%')
 		{
-			write(1, format, i);
+			len += (int)write(1, format, i);
 			format += i;
 			i = 0;
-			if (format[i] == '\\')
-				len += escape_char(&format, &i, &ap);
-			else if (format[i] == '%')
-				len += conversion(&format, &i, &ap);
+			i++;
+			len += conversion(&format, &i, &ap);
 		}
+		else
+			i++;
 	}
+	write(1, format, i);
 	va_end(ap);
-	return (len);
+	return (len + i);
 }
