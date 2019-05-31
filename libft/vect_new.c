@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   vect_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/29 10:02:48 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/05/28 15:51:45 by pheilbro         ###   ########.fr       */
+/*   Created: 2019/05/28 18:22:46 by pheilbro          #+#    #+#             */
+/*   Updated: 2019/05/29 11:55:09 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		*ft_memcpy(void *dst, const void *src, size_t n)
+t_vector	*vect_new(char *s, size_t len)
 {
-	size_t	i;
-	char	*ret;
-	char	*src_c;
+	t_vector	*v;
 
-	i = 0;
-	ret = (char *)dst;
-	src_c = (char *)src;
-	while (i < n)
+	if (!(v = malloc(sizeof(*v))))
+		return (NULL);
+	if (s)
 	{
-		ret[i] = src_c[i];
-		i++;
+		if (!(v->string = ft_memalloc(sizeof(*s) * len)))
+			return (NULL);
+		ft_memcpy(v->string, s, len);
+		v->len = len;
+		v->pos = len;
 	}
-	return (dst);
+	return (v);
 }

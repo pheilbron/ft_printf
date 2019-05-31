@@ -42,6 +42,7 @@ clean_debug:
 	rm -rf a.out.dSYM 
 
 fclean: clean clean_debug clean_parse
+	make fclean -C libft/
 	rm -f $(NAME)
 
 re: fclean all

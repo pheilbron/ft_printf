@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   vectget.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/29 10:02:48 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/05/28 15:51:45 by pheilbro         ###   ########.fr       */
+/*   Created: 2019/05/28 15:32:46 by pheilbro          #+#    #+#             */
+/*   Updated: 2019/05/28 18:40:36 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		*ft_memcpy(void *dst, const void *src, size_t n)
+void	vect_insert(t_vector *v, char *s, size_t len, size_t pos)
 {
-	size_t	i;
-	char	*ret;
-	char	*src_c;
-
-	i = 0;
-	ret = (char *)dst;
-	src_c = (char *)src;
-	while (i < n)
-	{
-		ret[i] = src_c[i];
-		i++;
-	}
-	return (dst);
+	if (v->len < v->pos + len)
+		vect_extend(v, len);
+	ft_memmove(v->string + pos + len, v->string + pos, v->pos - pos);
+	ft_memcpy(v->string + pos, s, len);
+	v->pos += len;
 }

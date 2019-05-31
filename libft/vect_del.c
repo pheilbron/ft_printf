@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   vect_end.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/29 10:02:48 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/05/28 15:51:45 by pheilbro         ###   ########.fr       */
+/*   Created: 2019/05/28 18:28:47 by pheilbro          #+#    #+#             */
+/*   Updated: 2019/05/28 18:42:00 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		*ft_memcpy(void *dst, const void *src, size_t n)
+void	vect_del(t_vector *v)
 {
-	size_t	i;
-	char	*ret;
-	char	*src_c;
-
-	i = 0;
-	ret = (char *)dst;
-	src_c = (char *)src;
-	while (i < n)
-	{
-		ret[i] = src_c[i];
-		i++;
-	}
-	return (dst);
+	free(v->string);
+	free(v);
 }

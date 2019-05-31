@@ -6,7 +6,7 @@
 #    By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/30 13:56:22 by pheilbro          #+#    #+#              #
-#    Updated: 2019/05/22 13:45:25 by pheilbro         ###   ########.fr        #
+#    Updated: 2019/05/28 18:50:10 by pheilbro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ BONUS =	ft_lstnew.c ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c \
 
 ADDN =	ft_isblank.c ft_pow.c ft_stpncpy.c ft_strndup.c ft_isspace.c \
 		ft_stpcpy.c ft_strlcpy.c ft_memndup.c get_next_line.c \
-		ft_lrotstr.c ft_modstrncmp.c ft_lmodrotstr.c ft_atoi_end.c
+		ft_lrotstr.c ft_modstrncmp.c ft_lmodrotstr.c ft_atoi_end.c \
+		vect_add.c vect_del.c vect_extend.c vect_new.c vect_insert.c
 
 FILES =	$(PART1) $(PART2) $(BONUS) $(ADDN)
 
