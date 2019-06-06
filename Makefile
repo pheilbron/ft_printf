@@ -25,8 +25,8 @@ $(OBJ): $(SRC)
 	$(CC) $(FLAGS) $(INC) -c $(SRC)
 
 test: all
-	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC) -c $(MAIN)
-	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC) $(LIB) -L. -lftprintf -o printf $(MAIN_OBJ)
+	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC) -c $(MAIN) $(SRC)
+	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC) $(LIB) -o printf $(MAIN_OBJ) $(OBJ)
 
 test_parse:
 	make -C libft/

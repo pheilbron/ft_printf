@@ -6,7 +6,7 @@
 #    By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/30 13:56:22 by pheilbro          #+#    #+#              #
-#    Updated: 2019/06/03 15:01:52 by pheilbro         ###   ########.fr        #
+#    Updated: 2019/06/06 15:38:25 by pheilbro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ ADDN =	ft_isblank.c ft_pow.c ft_stpncpy.c ft_strndup.c ft_isspace.c \
 		ft_stpcpy.c ft_strlcpy.c ft_memndup.c get_next_line.c \
 		ft_lrotstr.c ft_modstrncmp.c ft_lmodrotstr.c ft_atoi_end.c \
 		ft_vect_add.c ft_vect_del.c ft_vect_extend.c ft_vect_new.c \
-		ft_vect_insert.c
+		ft_vect_insert.c ft_max.c
 
 FILES =	$(PART1) $(PART2) $(BONUS) $(ADDN)
 

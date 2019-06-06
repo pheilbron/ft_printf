@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 10:27:37 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/03 15:30:28 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/06 15:44:27 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 extern t_vector	*g_con_string;
 
-int		adjust_field_width(size_t fw_len, char *pad, size_t start)
+int		adjust_field_width(int	fw_len, char *pad)
 {
 	int	i;
-
+	size_t	start;
+	
 	i = 0;
-	while (g_con_string->pos - start < fw_len)
+	start = g_con_string->pos;
+	while (fw_len > 0 && g_con_string->pos - start < (size_t)fw_len)
 	{
 		ft_vect_add(g_con_string, pad, 1);
 		i++;
@@ -27,12 +29,14 @@ int		adjust_field_width(size_t fw_len, char *pad, size_t start)
 	return (i);
 }
 
-int		adjust_integer_precision(size_t precision_len, size_t start)
+int		adjust_integer_precision(int pre_len)
 {
 	int	i;
+	size_t	start;
 	
 	i = 0;
-	while (g_con_string->pos - start < precision_len)
+	start = g_con_string->pos;
+	while (pre_len > 0 && g_con_string->pos - start < (size_t)pre_len)
 	{
 		ft_vect_add(g_con_string, "0", 1);
 		i++;

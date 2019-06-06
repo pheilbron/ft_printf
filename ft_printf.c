@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:28:19 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/03 19:39:49 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/06 15:17:55 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	conversion(const char **s, int *pos, va_list *ap)
 	if (ft_islmod((*s)[*pos]))
 		set_lmod(s, pos, &format);
 	ret = (*get_con((*s)[*pos]))(format, ap);
-	*s += *pos;
+	*s += *pos + 1;
 	*pos = 0;
 	return (ret);
 }
@@ -102,7 +102,7 @@ int	ft_printf(const char *format, ...)
 	va_start(ap, format);
 	i = 0;
 	len = 0;
-	g_con_string = ft_vect_new("", 0, 10);	
+	g_con_string = ft_vect_new("", 0, 100);	
 	while (format[i])
 	{
 		if (format[i] == '%')

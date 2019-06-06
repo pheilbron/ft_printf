@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 13:32:12 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/03 15:59:28 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/06 15:43:16 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,18 @@ int di_decimal(t_form form, va_list *ap)
 	while (g_dtoa[i].type != 0 && !ft_strcmp(g_dtoa[i].type, form.lmod))
 		i++;
 	partial = (*g_dtoa[i].f)(va_arg(*ap, char *));
-	i = g_con_string->pos;
-	if (!form.left_just)
-		ret += adjust_field_width(form.fw - ft_strlen(partial) -
-				(form.blank || form.sign ? 1 : 0), (form.zero ? "0" : " "), i);
+	if (!form.left_just && form.fw - form.pre > 0)
+		ret += adjust_field_width(form.fw - ft_max(ft_strlen(partial), form.pre) -
+				(form.blank || form.sign ? 1 : 0), (form.zero ? "0" : " "));
 	if (form.sign)
 		ret += ft_vect_add(g_con_string, "+", 1);
 	else if (form.blank)
 		ret += ft_vect_add(g_con_string, " ", 1);
 	if (form.pre > 0)
-		ret += adjust_integer_precision(form.pre, i);
-	if (form.left_just)
-		ret += adjust_field_width(form.fw - ft_strlen(partial) -
-				(form.blank || form.sign ? 1 : 0), (form.zero ? "0" : " "), i);
+		ret += adjust_integer_precision(form.pre - ft_strlen(partial));
+	ret += ft_vect_add(g_con_string, partial, ft_strlen(partial));
+	if (form.left_just && form.fw - form.pre > 0)
+		ret += adjust_field_width(form.fw - ft_max(ft_strlen(partial), form.pre) -
+				(form.blank || form.sign ? 1 : 0), (form.zero ? "0" : " "));
 	return (ret + ft_strlen(partial));
 }
