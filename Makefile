@@ -1,11 +1,14 @@
-NAME		= libftprint.a
+NAME		= libftprintf.a
 
-SRC			= ft_printf.c aux_func.c
+SRC			= ft_printf.c aux_func.c conversion.c di_decimal.c
+MAIN		= main.c
 TEST_SRC	= test_parse.c
 
 OBJ			= $(SRC:.c=.o)
+MAIN_OBJ	= $(MAIN:.c=.o)
 TEST_OBJ	= $(TEST_SRC:.c=.o)
 
+AR			= ar
 CC			= gcc
 INC			= -I. -I libft/includes
 LIB			= -Llibft/ -lft
@@ -16,19 +19,22 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C libft/
-	$(CC) $(FLAGS) $(INC) $(LIB) -o $(NAME) $(OBJ) $(MAIN_OBJ)
+	$(AR) rcs $(NAME) $(OBJ)
 
-$(OBJ): $(SRC) $(TEST_SRC)
-	$(CC) $(FLAGS) $(INC) -c $(SRC) $(MAIN)
+$(OBJ): $(SRC)
+	$(CC) $(FLAGS) $(INC) -c $(SRC)
+
+test: all
+	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC) -c $(MAIN)
+	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC) $(LIB) -L. -lftprintf -o printf $(MAIN_OBJ)
 
 test_parse:
 	make -C libft/
 	$(CC) $(FLAGS) $(INC) -c $(SRC) $(TEST_SRC)
 	$(CC) $(FLAGS) $(INC) $(LIB) -o test_parse $(OBJ) $(TEST_OBJ)
 
-debug:
-	make -C libft/
-	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC) $(LIB) $(SRC) $(TEST_SRC)
+debug: all
+	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC) $(LIB) -L. -lftprintf $(MAIN)
 
 clean:
 	rm -f $(OBJ) $(MAIN_OBJ)

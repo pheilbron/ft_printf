@@ -6,11 +6,15 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:28:19 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/05/24 18:54:37 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/03 19:39:49 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "t_con.h"
+#include "libft.h"
+
+t_vector	*g_con_string;
 
 void	set_flags(const char **s, int *pos, t_form *format)
 {
@@ -19,7 +23,7 @@ void	set_flags(const char **s, int *pos, t_form *format)
 		if ((*s)[*pos] == '#')
 			format->alt = 1;
 		else if ((*s)[*pos] == '0')
-			format->zero_pad = 1;
+			format->zero = 1;
 		else if ((*s)[*pos] == '-')
 			format->left_just = 1;
 		else if ((*s)[*pos] == '+')
@@ -34,39 +38,39 @@ void	set_precision(const char **s, int *pos, t_form *format)
 {
 	(*pos)++;
 	if (ft_isdigit((*s)[*pos]))
-		format->precision = ft_atoi_end(*s + *pos, pos);
+		format->pre = ft_atoi_end(*s + *pos, pos);
 	else
-		format->precision = 0;
+		format->pre = 0;
 }
 
-void	set_length_mod(const char **s, int *pos, t_form *format)
+void	set_lmod(const char **s, int *pos, t_form *format)
 {
 	int	start;
 
 	start = *pos;
-	format->length_mod = malloc(sizeof(*(format->length_mod)) * 3);
-	while (ft_islen_mod((*s)[*pos]))
+	format->lmod = malloc(sizeof(*(format->lmod)) * 3);
+	while (ft_islmod((*s)[*pos]))
 	{
-		*(format->length_mod + *pos - start) = (*s)[*pos];
+		*(format->lmod + *pos - start) = (*s)[*pos];
 		(*pos)++;
 	}
-	*(format->length_mod + *pos - start) = '\0';
+	*(format->lmod + *pos - start) = '\0';
 	*s += *pos;
 	*pos = 0;
 }
 
-int	(*get_con(char type))(t_form, va_list)
+int	(*get_con(char type))(t_form, va_list *)
 {
 	size_t	i;
 
 	i = 0;
-	while (g_contab[i]->type != 0)
+	while (g_contab[i].type != 0)
 	{
-		if (g_contab[i]->type == *type)
-			return (g_contab[i]->f);
+		if (g_contab[i].type == type)
+			return (g_contab[i].f);
 		i++;
 	}
-	return (g_contab[i]->f);
+	return (g_contab[i].f);
 }
 
 int	conversion(const char **s, int *pos, va_list *ap)
@@ -78,11 +82,11 @@ int	conversion(const char **s, int *pos, va_list *ap)
 	if (ft_isflag((*s)[*pos]))
 		set_flags(s, pos, &format);
 	if (ft_isdigit((*s)[*pos]) && (*s)[*pos] != '0') 
-		format.field_width = ft_atoi_end(*s + *pos, pos);
+		format.fw = ft_atoi_end(*s + *pos, pos);
 	if ((*s)[*pos] == '.')
 		set_precision(s, pos, &format);
-	if (ft_islen_mod((*s)[*pos]))
-		set_length_mod(s, pos, &format);
+	if (ft_islmod((*s)[*pos]))
+		set_lmod(s, pos, &format);
 	ret = (*get_con((*s)[*pos]))(format, ap);
 	*s += *pos;
 	*pos = 0;
@@ -98,11 +102,12 @@ int	ft_printf(const char *format, ...)
 	va_start(ap, format);
 	i = 0;
 	len = 0;
+	g_con_string = ft_vect_new("", 0, 10);	
 	while (format[i])
 	{
 		if (format[i] == '%')
 		{
-			len += (int)write(1, format, i);
+			len += ft_vect_add(g_con_string, (char *)format, i);
 			format += i;
 			i = 1;
 			len += conversion(&format, &i, &ap);
@@ -110,7 +115,8 @@ int	ft_printf(const char *format, ...)
 		else
 			i++;
 	}
-	write(1, format, i);
+	ft_vect_add(g_con_string, (char *)format, i);
+	write(1, g_con_string->data, g_con_string->pos);
 	va_end(ap);
-	return (len + i);
+	return (g_con_string->pos);
 }

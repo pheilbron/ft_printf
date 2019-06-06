@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vect_extend.c                                      :+:      :+:    :+:   */
+/*   ft_vect_add.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/28 16:44:10 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/05/29 11:57:31 by pheilbro         ###   ########.fr       */
+/*   Created: 2019/06/03 14:56:33 by pheilbro          #+#    #+#             */
+/*   Updated: 2019/06/03 19:39:02 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	vect_extend(t_vector *v, size_t len)
+size_t	ft_vect_add(t_vector *v, char *new_data, size_t len)
 {
-	t_vector	*temp;
-
-	temp = vect_new(v->string, v->pos);
-	vect_del(v);
-	v = vect_new(temp->string,
-			(temp->len > len ? temp->len * 2 : (temp->len * 2) + len));
-	vect_del(temp);
+	if (v->size < v->pos + len)
+		ft_vect_extend(v, len);
+	ft_memcpy(v->data + v->pos, new_data, len);
+	v->pos += len;
+	return (len);
 }

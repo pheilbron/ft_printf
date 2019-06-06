@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:29:18 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/05/24 18:55:55 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/03 15:58:28 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,38 +22,27 @@
 typedef struct	s_form
 {
 	char		alt;
-	char		zero_pad;
+	char		zero;
 	char		left_just;
 	char		blank;
 	char		sign;
-	int			field_width;
-	int			precision;
-	char		*length_mod;
+	int			fw;
+	int			pre;
+	char		*lmod;
 }				t_form;
 
-typedef struct	s_con
-{
-	char		*type;
-	int			(*f)();
-}				t_con;
+int		ft_printf(const char *format, ...);
 
-t_con	*g_contab[] =
-{
-	{"s", &integer},
-	{"p", &integer},
-	{"d", &integer},
-	{"i", &integer},
-	{"o", &integer},
-	{"u", &integer},
-	{"x", &integer},
-	{"c", &integer}
-}
-
-int	ft_printf(const char *format, ...);
+int		di_decimal(t_form, va_list *ap);
 
 void	format_init(t_form *format);
-int	ft_islen_mod(char c);
-int	ft_isconversion(char c);
-int	ft_isflag(char c);
+int		ft_islmod(char c);
+int		ft_isconversion(char c);
+int		ft_isflag(char c);
+
+int		adjust_field_width(size_t fw_len, char *pad, size_t start);
+int		adjust_integer_precision(size_t precision_len, size_t start);
+
+int		di_decimal(t_form format, va_list *ap);
 
 #endif

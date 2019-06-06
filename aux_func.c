@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 11:18:55 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/05/23 13:22:36 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/03 15:31:53 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 void	format_init(t_form *format)
 {
 	format->alt = 0;
-	format->zero_pad = 0;
+	format->zero = 0;
 	format->left_just = 0;
 	format->blank = 0;
 	format->sign = 0;
-	format->field_width = 0;
-	format->precision = 0;
-	format->length_mod = (char *)0;
+	format->fw = 0;
+	format->pre = 0;
+	format->lmod = (char *)0;
 }
 
-int	ft_islen_mod(char c)
+int	ft_islmod(char c)
 {
 	return (c == 'h' || c == 'l' || c == 'j' || c == 't' || c == 'z');
 }
