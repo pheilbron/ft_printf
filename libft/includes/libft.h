@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 16:38:42 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/06 15:38:58 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/06 17:01:47 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,5 @@ size_t			ft_vect_add(t_vector *v, char *s, size_t len);
 size_t			ft_vect_insert(t_vector *, size_t, char *, size_t);
 size_t			ft_vect_extend(t_vector *v, size_t len);
 void			ft_vect_del(t_vector *v);
-
 
 #endif
