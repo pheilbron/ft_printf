@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 15:58:50 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/06 17:00:52 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/07 11:41:14 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct	s_toa
 t_toa	g_dtoa[] =
 {
 //	{"hh", &sctoa},
-	{"h", &stoa},
+//	{"h", &stoa},
 //	{"l", &ltoa},
 //	{"ll", &lltoa},
 //	{"j", &maxtoa},
