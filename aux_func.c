@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 11:18:55 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/03 15:31:53 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/11 15:34:38 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ void	format_init(t_form *format)
 	format->blank = 0;
 	format->sign = 0;
 	format->fw = 0;
-	format->pre = 0;
+	format->pre = -1;
 	format->lmod = (char *)0;
+	format->type = 0;
+	format->cap = 0;
 }
 
 int	ft_islmod(char c)

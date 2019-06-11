@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 15:53:05 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/03 15:56:09 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/11 16:27:43 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,26 @@
 typedef struct	s_con
 {
 	char		type;
-	int			(*f)();
+	char		(*f)(t_form, va_list *);
 }				t_con;
 
 t_con	g_contab[] =
 {
-//	{'s', &s_charstring},
-//	{'p', &integer},
-	{'d', &di_decimal},
-//	{'c', &c_char}
-//	{'o', &integer},
-//	{'u', &integer},
-//	{'x', &integer},
-	{'i', &di_decimal},
-	{0, &di_decimal}
+//	{'a', &get_float_partial}
+//	{'c', &get_unsigned_partial}
+	{'d', &get_int_partial},
+//	{'f', &get_float_partial}
+//	{'g', &get_float_partial}
+//	{'h', &get_float_partial}
+	{'i', &get_int_partial},
+//	{'m', &get_error_code},
+//	{'n', &set_chars_written},
+//	{'o', &get_unsigned_partial},
+//	{'p', &get_pointer_partial},
+//	{'s', &get_string_partial},
+//	{'u', &get_unsigned_partial},
+//	{'x', &get_unsigned_partial},
+	{0, &get_int_partial}
 };
 
 #endif

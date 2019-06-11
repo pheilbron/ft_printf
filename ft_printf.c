@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:28:19 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/07 12:56:48 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/11 15:49:46 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,33 @@ int	(*get_con(char type))(t_form, va_list *)
 	return (g_contab[i].f);
 }
 
+void	clean_tform(t_form form)
+{
+	if (form.type >= 'A' && form.type <= 'Z')
+	{
+		form.type += 'a' - 'A';
+		form.cap = 1;
+		form.len_mod = (!*form.len_mod ? "l": form.len_mod);
+	}
+	if (form.zero && form.sign)
+		form.zero = 0;
+	if (!(form.type == 'a' || form.type == 'd' || form.type == 'e' ||
+				form.type == 'f' || form.type == 'f' || form.type == 'g' ||
+				form.type == 'i'))
+	{
+		form.blank = 0;
+		form.sign = 0;
+	}
+	if (form.pre == -1)
+	{
+		if (form.type == 'f' || form.type == 'g' || form.type == 'f' ||
+				form.type == 'a')
+			form.pre = 6;
+		else
+			form.pre = 0;
+	}
+}
+
 int	conversion(const char **s, int *pos, va_list *ap)
 {
 	t_form	format;
@@ -87,7 +114,9 @@ int	conversion(const char **s, int *pos, va_list *ap)
 		set_precision(s, pos, &format);
 	if (ft_islmod((*s)[*pos]))
 		set_lmod(s, pos, &format);
-	ret = (*get_con((*s)[*pos]))(format, ap);
+	format.type = (*s)[*pos];
+	clean_tform(format);
+	ret = set_format_string(format, ap, (*get_con(format.type)(format, ap)));
 	*s += *pos + 1;
 	*pos = 0;
 	return (ret);
