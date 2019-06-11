@@ -11,15 +11,18 @@ TEST_OBJ	= $(TEST_SRC:.c=.o)
 AR			= ar
 CC			= gcc
 INC			= -I. -I libft/includes
-LIB			= -Llibft/ -lft
 FLAGS		= -Wall -Werror -Wextra
 DEBUG_FLAGS	= -g -fsanitize=address
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	make -C libft/
-	$(AR) rcs $(NAME) $(OBJ)
+	@make -C libft/
+	ar -x libft/libft.a && mv *.o obj/
+	$(CC) $(FLAGS) $(INC) -c $(SRC)
+	$(AR) -rcs $@ $(OBJ) obj/*.o
+	ranlib $(NAME)
+	rm "__.SYMDEF SORTED"
 
 $(OBJ): $(SRC)
 	$(CC) $(FLAGS) $(INC) -c $(SRC)
@@ -37,7 +40,9 @@ test_parse:
 debug: all
 	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC) $(LIB) -L. -lftprintf $(MAIN)
 
-clean:
+clean: clean_parse clean_debug
+	make clean -C libft/
+	rm -f obj/*.c
 	rm -f $(OBJ) $(MAIN_OBJ)
 
 clean_parse:
