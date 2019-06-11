@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 16:16:13 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/11 16:22:02 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/11 16:41:37 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ unsigned long long	ft_ullpow(int base, int exp)
 	return (ret);
 }
 
-char			get_val(int n, int cap)
+char				get_val(int n, int cap)
 {
-	char	values[16];
-	char	c_values[16];
+	char	*values;
+	char	*c_values;
 
 	values = "0123456789ABCDEF";
 	c_values = "0123456789abcdef";
@@ -34,7 +34,7 @@ char			get_val(int n, int cap)
 	return (values[n]);
 }
 
-char			*ft_ulltoa_base(unsigned long long n, int base, int cap)
+char				*ft_ulltoa_base(unsigned long long n, int base, int cap)
 {
 	char	*ret;
 	int		digit;
@@ -42,7 +42,7 @@ char			*ft_ulltoa_base(unsigned long long n, int base, int cap)
 
 	digit = 0;
 	i = 0;
-	while (n / ft_llpow(base, digit) >= base)
+	while (n / ft_ullpow(base, digit) >= (unsigned int)base)
 		digit++;
 	if (!(ret = (char *)malloc(sizeof(*ret) * (digit + 2))))
 		return (NULL);

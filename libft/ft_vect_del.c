@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 14:56:51 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/07 11:59:15 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/11 16:41:45 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_vect_del(t_vector *v)
 {
-	if(v->data)
+	if (v->data)
 		free(v->data);
 	free(v);
 }
