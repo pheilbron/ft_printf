@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:28:19 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/11 16:37:10 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/11 17:14:44 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	set_lmod(const char **s, int *pos, t_form *format)
 	*pos = 0;
 }
 
-int	(*get_con(char type))(t_form, va_list *)
+char	*(*get_con(char type))(t_form, va_list *)
 {
 	size_t	i;
 
@@ -79,7 +79,7 @@ void	clean_tform(t_form form)
 	{
 		form.type += 'a' - 'A';
 		form.cap = 1;
-		form.len_mod = (!*form.len_mod ? "l": form.len_mod);
+		form.lmod = (!*form.lmod ? "l": form.lmod);
 	}
 	if (form.zero && form.sign)
 		form.zero = 0;
@@ -116,7 +116,7 @@ int	conversion(const char **s, int *pos, va_list *ap)
 		set_lmod(s, pos, &format);
 	format.type = (*s)[*pos];
 	clean_tform(format);
-	ret = set_format_string(format, ap, (*get_con(format.type)(format, ap)));
+	ret = set_format_string(format, (*get_con)(format.type)(format, ap));
 	*s += *pos + 1;
 	*pos = 0;
 	return (ret);

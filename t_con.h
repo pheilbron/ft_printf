@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 15:53:05 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/11 16:36:17 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/11 18:02:16 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,26 @@
 # define T_CON_H
 
 # include "ft_printf.h"
-
+# 
 typedef struct	s_con
 {
 	char		type;
-	char		(*f)(t_form, va_list *);
+	char		*(*f)(t_form, va_list *);
 }				t_con;
+
+char	*get_char_partial(t_form format, va_list *ap);
+char	*get_int_partial(t_form format, va_list *ap);
+char	*get_unsigned_partial(t_form format, va_list *ap);
+char	*get_string_partial(t_form format, va_list *ap);
 
 t_con	g_contab[] =
 {
-//	{'a', &get_float_partial}
-	{'c', &get_unsigned_partial}
+//	{'a', &get_float_partial},
+//	{'c', &get_char_partial},
 	{'d', &get_int_partial},
-//	{'f', &get_float_partial}
-//	{'g', &get_float_partial}
-//	{'h', &get_float_partial}
+//	{'f', &get_float_partial},
+//	{'g', &get_float_partial},
+//	{'h', &get_float_partial},
 	{'i', &get_int_partial},
 //	{'m', &get_error_code},
 //	{'n', &set_chars_written},

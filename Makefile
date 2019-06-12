@@ -1,6 +1,6 @@
 NAME		= libftprintf.a
 
-SRC			= ft_printf.c aux_func.c conversion.c di_decimal.c
+SRC			= ft_printf.c aux_func.c conversion.c set_format_string.c
 MAIN		= main.c
 TEST_SRC	= test_parse.c
 

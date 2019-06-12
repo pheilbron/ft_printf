@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:29:18 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/11 15:50:21 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/11 17:14:59 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <unistd.h>
 # include <stdarg.h>
 # include <stdlib.h>
+# include <wchar.h>
+# include <inttypes.h>
 
 # include "libft.h"
 
@@ -35,7 +37,7 @@ typedef struct	s_form
 
 int		ft_printf(const char *format, ...);
 
-int		di_decimal(t_form, va_list *ap);
+int		set_format_string(t_form, char *partial);
 
 void	format_init(t_form *format);
 int		ft_islmod(char c);
