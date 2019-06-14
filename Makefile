@@ -10,6 +10,7 @@ TEST_OBJ	= $(TEST_SRC:.c=.o)
 
 AR			= ar
 CC			= gcc
+LIB			= -Llibft -lft
 INC			= -I. -I libft/includes
 FLAGS		= -Wall -Werror -Wextra
 DEBUG_FLAGS	= -g -fsanitize=address

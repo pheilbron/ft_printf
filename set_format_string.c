@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 13:32:12 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/11 18:06:46 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/13 16:52:52 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,20 @@
 #include "libft.h"
 
 extern	t_vector	*g_con_string;
+
+char	*(*get_con(char type))(t_form, va_list *)
+{
+	size_t	i;
+
+	i = 0;
+	while (g_contab[i].type != 0)
+	{
+		if (g_contab[i].type == type)
+			return (g_contab[i].f);
+		i++;
+	}
+	return (g_contab[i].f);
+}
 
 char	*get_int_partial(t_form form, va_list *ap)
 {
@@ -95,6 +109,8 @@ int set_format_string(t_form form, char *partial)
 	int		ret;
 
 	ret = 0;
+	if (form.alt)
+		ret += adjust_alternate_form(form, partial);
 	if (!form.left_just && form.fw - form.pre > 0)
 		ret += adjust_field_width(form.fw - ft_max(ft_strlen(partial), form.pre)
 				- (form.blank || form.sign ? 1 : 0), (form.zero ? "0" : " "));

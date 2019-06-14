@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 16:16:13 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/11 16:41:37 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/13 16:37:14 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ char				get_val(int n, int cap)
 	char	*values;
 	char	*c_values;
 
-	values = "0123456789ABCDEF";
-	c_values = "0123456789abcdef";
+	values = "0123456789abcdef";
+	c_values = "0123456789ABCDEF";
 	if (cap)
 		return (c_values[n]);
 	return (values[n]);

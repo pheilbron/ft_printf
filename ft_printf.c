@@ -6,12 +6,11 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:28:19 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/11 18:17:46 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/13 16:41:18 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "t_con.h"
 #include "libft.h"
 
 t_vector	*g_con_string;
@@ -48,7 +47,6 @@ void	set_lmod(const char **s, int *pos, t_form *format)
 	int	start;
 
 	start = *pos;
-	format->lmod = malloc(sizeof(*(format->lmod)) * 3);
 	while (ft_islmod((*s)[*pos]))
 	{
 		*(format->lmod + *pos - start) = (*s)[*pos];
@@ -59,45 +57,31 @@ void	set_lmod(const char **s, int *pos, t_form *format)
 	*pos = 0;
 }
 
-char	*(*get_con(char type))(t_form, va_list *)
+void	clean_tform(t_form *form)
 {
-	size_t	i;
-
-	i = 0;
-	while (g_contab[i].type != 0)
+	if (form->type >= 'A' && form->type <= 'Z')
 	{
-		if (g_contab[i].type == type)
-			return (g_contab[i].f);
-		i++;
+		form->type += 'a' - 'A';
+		form->cap = 1;
+		form->lmod = (!*form->lmod || ft_strcmp(form->lmod, "hh") ||
+				ft_strcmp(form->lmod, "h") ? "l": form->lmod);
 	}
-	return (g_contab[i].f);
-}
-
-void	clean_tform(t_form form)
-{
-	if (form.type >= 'A' && form.type <= 'Z')
+	if (form->zero && form->sign)
+		form->zero = 0;
+	if (!(form->type == 'a' || form->type == 'd' || form->type == 'e' ||
+				form->type == 'f' || form->type == 'f' || form->type == 'g' ||
+				form->type == 'i'))
 	{
-		form.type += 'a' - 'A';
-		form.cap = 1;
-		form.lmod = (!*form.lmod || ft_strcmp(form.lmod, "hh") ||
-				ft_strcmp(form.lmod, "h") ? "l": form.lmod);
+		form->blank = 0;
+		form->sign = 0;
 	}
-	if (form.zero && form.sign)
-		form.zero = 0;
-	if (!(form.type == 'a' || form.type == 'd' || form.type == 'e' ||
-				form.type == 'f' || form.type == 'f' || form.type == 'g' ||
-				form.type == 'i'))
+	if (form->pre == -1)
 	{
-		form.blank = 0;
-		form.sign = 0;
-	}
-	if (form.pre == -1)
-	{
-		if (form.type == 'f' || form.type == 'g' || form.type == 'f' ||
-				form.type == 'a')
-			form.pre = 6;
+		if (form->type == 'f' || form->type == 'g' || form->type == 'f' ||
+				form->type == 'a')
+			form->pre = 6;
 		else
-			form.pre = 0;
+			form->pre = 0;
 	}
 }
 
@@ -116,7 +100,7 @@ int	conversion(const char **s, int *pos, va_list *ap)
 	if (ft_islmod((*s)[*pos]))
 		set_lmod(s, pos, &format);
 	format.type = (*s)[*pos];
-	clean_tform(format);
+	clean_tform(&format);
 	ret = set_format_string(format, (*get_con)(format.type)(format, ap));
 	*s += *pos + 1;
 	*pos = 0;
