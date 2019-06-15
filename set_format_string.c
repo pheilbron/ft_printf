@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 13:32:12 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/13 16:52:52 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/14 17:10:34 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,11 @@ int set_format_string(t_form form, char *partial)
 	int		ret;
 
 	ret = 0;
-	if (form.alt)
-		ret += adjust_alternate_form(form, partial);
 	if (!form.left_just && form.fw - form.pre > 0)
 		ret += adjust_field_width(form.fw - ft_max(ft_strlen(partial), form.pre)
 				- (form.blank || form.sign ? 1 : 0), (form.zero ? "0" : " "));
+	if (form.alt)
+		ret += adjust_alternate_form(form, partial);
 	if (form.sign && partial[0] != '-')
 		ret += ft_vect_add(g_con_string, "+", 1);
 	else if (form.blank && partial [0] != '-')

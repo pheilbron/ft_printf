@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:28:19 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/13 16:41:18 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/14 17:10:19 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,9 @@ void	clean_tform(t_form *form)
 	{
 		form->type += 'a' - 'A';
 		form->cap = 1;
-		form->lmod = (!*form->lmod || ft_strcmp(form->lmod, "hh") ||
-				ft_strcmp(form->lmod, "h") ? "l": form->lmod);
+		form->lmod = (((!*form->lmod || ft_strcmp(form->lmod, "hh") ||
+				ft_strcmp(form->lmod, "h")) && form->type != 'x')
+				? "l": form->lmod);
 	}
 	if (form->zero && form->sign)
 		form->zero = 0;
