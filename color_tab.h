@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   color_tab.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/29 11:12:17 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/17 14:47:22 by pheilbro         ###   ########.fr       */
+/*   Created: 2019/06/17 18:13:20 by pheilbro          #+#    #+#             */
+/*   Updated: 2019/06/17 20:42:08 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef COLOR_TAB_H
+# define COLOR_TAB_H
 
-int	ft_strcmp(const char *s1, const char *s2)
+typedef struct	s_color
 {
-	while (*s1)
-	{
-		if (*s1 != *s2)
-			return ((unsigned char)*s1 - (unsigned char)*s2);
-		s1++;
-		s2++;
-	}
-	return ((unsigned char)*s1 - (unsigned char)*s2);
-}
+	char	*name;
+	char	*escape_code;
+}				t_color;
+
+t_color	g_color_tab[] =
+{
+	{"blk", "\x1b[38;5;0"},
+	{"red", "\x1b[38;5;1"},
+	{"grn", "\x1b[38;5;2"},
+	{"yel", "\x1b[38;5;3"},
+	{"blu", "\x1b[38;5;4"},
+	{"mag", "\x1b[38;5;5"},
+	{"cyn", "\x1b[38;5;6"},
+	{"whi", "\x1b[38;5;7"},
+	{"eoc", "\x1b[38;5;0"},
+	{NULL, "\x1b[38;5;0"}
+};
+
+#endif

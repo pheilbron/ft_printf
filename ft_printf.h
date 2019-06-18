@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:29:18 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/13 16:57:36 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/17 20:41:07 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct	s_form
 
 int		ft_printf(const char *format, ...);
 
-int		set_format_string(t_form, char *partial);
+int		set_color_format_string(const char *s, int *pos);
 
 void	format_init(t_form *format);
 int		ft_islmod(char c);
@@ -48,7 +48,6 @@ int		adjust_field_width(int fw_len, char *pad);
 int		adjust_integer_precision(int precision_len);
 int		adjust_alternate_form(t_form form, char *partial);
 
-char	*(*get_con(char type))(t_form, va_list *);
-int		di_decimal(t_form format, va_list *ap);
+int		(*get_con(char type))(t_form, va_list *);
 
 #endif

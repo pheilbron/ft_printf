@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 16:38:42 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/11 16:42:44 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/17 15:49:45 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
+# include <wchar.h>
 
 # define BUFF_SIZE 32
 
@@ -111,8 +112,11 @@ int				ft_modstrncmp(char *s1, char *s2, size_t n, size_t mod);
 void			ft_lmodrotstr(char *s, size_t len, size_t mod);
 
 int				ft_max(int a, int b);
+int				ft_min(int a, int b);
 char			*ft_lltoa(long long n);
 char			*ft_ulltoa_base(unsigned long long n, int base, int cap);
+
+size_t			ft_wstrlen(const wchar_t *s);
 
 t_vector		*ft_vect_new(char *s, size_t len, size_t size);
 size_t			ft_vect_add(t_vector *v, char *s, size_t len);

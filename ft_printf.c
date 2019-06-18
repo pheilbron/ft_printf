@@ -6,12 +6,13 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:28:19 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/14 17:10:19 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/17 20:52:45 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft.h"
+#include <stdio.h>
 
 t_vector	*g_con_string;
 
@@ -57,32 +58,30 @@ void	set_lmod(const char **s, int *pos, t_form *format)
 	*pos = 0;
 }
 
-void	clean_tform(t_form *form)
+void	clean_tform(t_form *f)
 {
-	if (form->type >= 'A' && form->type <= 'Z')
+	if (f->type >= 'A' && f->type <= 'Z')
 	{
-		form->type += 'a' - 'A';
-		form->cap = 1;
-		form->lmod = (((!*form->lmod || ft_strcmp(form->lmod, "hh") ||
-				ft_strcmp(form->lmod, "h")) && form->type != 'x')
-				? "l": form->lmod);
+		f->type += 'a' - 'A';
+		f->cap = 1;
+		f->lmod = (((!*f->lmod || ft_strcmp(f->lmod, "hh") ||
+				ft_strcmp(f->lmod, "h")) && f->type != 'x') ? "l": f->lmod);
 	}
-	if (form->zero && form->sign)
-		form->zero = 0;
-	if (!(form->type == 'a' || form->type == 'd' || form->type == 'e' ||
-				form->type == 'f' || form->type == 'f' || form->type == 'g' ||
-				form->type == 'i'))
+	f->zero = (f->zero && f->sign) ? 0 : f->zero;
+	if (!(f->type == 'a' || f->type == 'd' || f->type == 'e' || f->type == 'f'
+				|| f->type == 'f' || f->type == 'g' || f->type == 'i'))
 	{
-		form->blank = 0;
-		form->sign = 0;
+		f->blank = 0;
+		f->sign = 0;
 	}
-	if (form->pre == -1)
+	if (f->pre == -1)
 	{
-		if (form->type == 'f' || form->type == 'g' || form->type == 'f' ||
-				form->type == 'a')
-			form->pre = 6;
-		else
-			form->pre = 0;
+		if (f->type == 'f' || f->type == 'g' || f->type == 'f'
+				|| f->type == 'a')
+			f->pre = 6;
+		else if (f->type != 's' && f->type != 'x' && f->type != 'o' &&
+				f->type != 'i' && f->type != 'd')
+			f->pre = 0;
 	}
 }
 
@@ -102,7 +101,7 @@ int	conversion(const char **s, int *pos, va_list *ap)
 		set_lmod(s, pos, &format);
 	format.type = (*s)[*pos];
 	clean_tform(&format);
-	ret = set_format_string(format, (*get_con)(format.type)(format, ap));
+	ret = (*get_con)(format.type)(format, ap);
 	*s += *pos + 1;
 	*pos = 0;
 	return (ret);
@@ -120,18 +119,21 @@ int	ft_printf(const char *format, ...)
 	g_con_string = ft_vect_new("", 0, 100);	
 	while (format[i])
 	{
-		if (format[i] == '%')
+		if (format[i] != '{' && format[i] != '%')
+			i++;
+		else
 		{
 			len += ft_vect_add(g_con_string, (char *)format, i);
 			format += i;
 			i = 1;
-			len += conversion(&format, &i, &ap);
+			if (format[i - 1] == '%')
+				len += conversion(&format, &i, &ap);
+			else if (format[i - 1] == '{')
+				len += set_color_format_string(format + i - 1, &i);
 		}
-		else
-			i++;
 	}
-	ft_vect_add(g_con_string, (char *)format, i);
+	len += ft_vect_add(g_con_string, (char *)format, i);
 	write(1, g_con_string->data, g_con_string->pos);
 	va_end(ap);
-	return (g_con_string->pos);
+	return (len);
 }
