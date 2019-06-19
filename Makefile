@@ -2,11 +2,9 @@ NAME		= libftprintf.a
 
 SRC			= ft_printf.c aux_func.c conversion.c set_format_string.c
 MAIN		= main.c
-TEST_SRC	= test_parse.c
 
 OBJ			= $(SRC:.c=.o)
 MAIN_OBJ	= $(MAIN:.c=.o)
-TEST_OBJ	= $(TEST_SRC:.c=.o)
 
 AR			= ar
 CC			= gcc
@@ -32,28 +30,19 @@ test:
 	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC) -c $(MAIN) $(SRC)
 	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC) -L. -lftprintf -o printf $(MAIN_OBJ) $(OBJ)
 
-test_parse:
-	make -C libft/
-	$(CC) $(FLAGS) $(INC) -c $(SRC) $(TEST_SRC)
-	$(CC) $(FLAGS) $(INC) $(LIB) -o test_parse $(OBJ) $(TEST_OBJ)
-
 debug: all
 	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC) $(LIB) -L. -lftprintf $(MAIN)
 
-clean: clean_parse clean_debug
+clean: clean_debug
 	make clean -C libft/
 	rm -f obj/*.c
 	rm -f $(OBJ) $(MAIN_OBJ)
-
-clean_parse:
-	rm -f test_parse
-	rm -f $(TEST_OBJ)
 
 clean_debug:
 	rm -f a.out
 	rm -rf a.out.dSYM 
 
-fclean: clean clean_debug clean_parse
+fclean: clean clean_debug
 	make fclean -C libft/
 	rm -f $(NAME)
 
