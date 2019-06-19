@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:28:19 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/19 13:38:33 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/19 16:07:02 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,5 @@ int	ft_printf(const char *format, ...)
 	ft_vect_add(g_con_string, (char *)format, i);
 	write(1, g_con_string->data, g_con_string->pos);
 	va_end(ap);
-	return (g_con_string->pos);
+	return (ft_vect_del(g_con_string));
 }

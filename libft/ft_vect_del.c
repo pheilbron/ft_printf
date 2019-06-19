@@ -6,15 +6,19 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 14:56:51 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/11 16:41:45 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/19 16:06:01 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_vect_del(t_vector *v)
+size_t	ft_vect_del(t_vector *v)
 {
+	size_t	ret;
+
+	ret = v->pos;
 	if (v->data)
 		free(v->data);
 	free(v);
+	return (ret);
 }
