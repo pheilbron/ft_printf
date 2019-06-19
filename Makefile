@@ -27,8 +27,8 @@ $(OBJ): $(SRC)
 	$(CC) $(FLAGS) $(INC) -c $(SRC)
 
 test: 
-	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC) -c $(MAIN) $(SRC)
-	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC) -L. -lftprintf -o printf $(MAIN_OBJ) $(OBJ)
+	$(CC) $(FLAGS) $(INC) -c $(MAIN) $(SRC)
+	$(CC) $(FLAGS) $(INC) -L. -lftprintf -o printf $(MAIN_OBJ) $(OBJ)
 
 debug: all
 	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC) $(LIB) -L. -lftprintf $(MAIN)

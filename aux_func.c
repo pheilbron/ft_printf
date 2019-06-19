@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 11:18:55 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/13 16:28:17 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/19 13:34:46 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	format_init(t_form *format)
 	format->sign = 0;
 	format->fw = 0;
 	format->pre = -1;
-	format->lmod = malloc(sizeof(*(format->lmod)) * 3);
+	format->lmod = 0;
 	format->type = 0;
 	format->cap = 0;
 }

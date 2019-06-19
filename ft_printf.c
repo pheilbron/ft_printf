@@ -6,13 +6,12 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:28:19 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/19 11:25:28 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/19 13:38:33 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft.h"
-#include <stdio.h>
 
 t_vector	*g_con_string;
 
@@ -45,15 +44,11 @@ void	set_precision(const char **s, int *pos, t_form *format)
 
 void	set_lmod(const char **s, int *pos, t_form *format)
 {
-	int	start;
-
-	start = *pos;
 	while (ft_islmod((*s)[*pos]))
 	{
-		*(format->lmod + *pos - start) = (*s)[*pos];
+		format->lmod += (*s)[*pos];
 		(*pos)++;
 	}
-	*(format->lmod + *pos - start) = '\0';
 	*s += *pos;
 	*pos = 0;
 }
@@ -64,8 +59,8 @@ void	clean_tform(t_form *f)
 	{
 		f->type += 'a' - 'A';
 		f->cap = 1;
-		f->lmod = (((!*f->lmod || ft_strcmp(f->lmod, "hh") ||
-				ft_strcmp(f->lmod, "h")) && f->type != 'x') ? "l": f->lmod);
+		f->lmod = (((!f->lmod || f->lmod == ('h' + 'h') ||
+				f->lmod == 'h') && f->type != 'x') ? 'l': f->lmod);
 	}
 	if (!(f->type == 'a' || f->type == 'd' || f->type == 'e' || f->type == 'f'
 				|| f->type == 'f' || f->type == 'g' || f->type == 'i'))

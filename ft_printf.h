@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:29:18 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/17 20:41:07 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/19 13:38:13 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct	s_form
 	char		sign;
 	int			fw;
 	int			pre;
-	char		*lmod;
+	unsigned char	lmod;
 	char		type;
 	char		cap;
 }				t_form;

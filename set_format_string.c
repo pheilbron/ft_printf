@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 17:59:06 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/19 11:48:19 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/19 14:08:43 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@ int		(*get_con(char type))(t_form, va_list *)
 
 char	*get_int_partial(t_form form, va_list *ap)
 {
-	if (ft_strcmp(form.lmod, "hh") == 0)
+	if (form.lmod == ('h' + 'h'))
 		return (ft_lltoa((signed char)va_arg(*ap, int)));
-	if (ft_strcmp(form.lmod, "h") == 0)
+	if (form.lmod == 'h')
 		return (ft_lltoa((short)va_arg(*ap, int)));
-	if (ft_strcmp(form.lmod, "l") == 0)
+	if (form.lmod == 'l')
 		return (ft_lltoa(va_arg(*ap, long)));
-	if (ft_strcmp(form.lmod, "ll") == 0)
+	if (form.lmod == ('l' + 'l'))
 		return (ft_lltoa(va_arg(*ap, long long)));
-	if (form.lmod[0] == 'j')
+	if (form.lmod == 'j')
 		return (ft_lltoa(va_arg(*ap, intmax_t)));
-	if (form.lmod[0] == 'z')
+	if (form.lmod == 'z')
 		return (ft_lltoa(va_arg(*ap, size_t)));
 	return (ft_itoa(va_arg(*ap, int)));
 }
@@ -63,17 +63,17 @@ char	*get_unsigned_con(t_form form, unsigned long long value)
 
 char	*get_unsigned_partial(t_form f, va_list *ap)
 {
-	if (ft_strcmp(f.lmod, "hh") == 0)
+	if (f.lmod == ('h' + 'h'))
 		return (get_unsigned_con(f, (unsigned char)va_arg(*ap, unsigned int)));
-	if (ft_strcmp(f.lmod, "h") == 0)
+	if (f.lmod == 'h')
 		return (get_unsigned_con(f, (unsigned short)va_arg(*ap, unsigned int)));
-	if (ft_strcmp(f.lmod, "l") == 0)
+	if (f.lmod == 'l')
 		return (get_unsigned_con(f, va_arg(*ap, unsigned long)));
-	if (ft_strcmp(f.lmod, "ll") == 0)
+	if (f.lmod == ('l' + 'l'))
 		return (get_unsigned_con(f, va_arg(*ap, unsigned long long)));
-	if (f.lmod[0] == 'j')
+	if (f.lmod == 'j')
 		return (get_unsigned_con(f, va_arg(*ap, uintmax_t)));
-	if (f.lmod[0] == 'z')
+	if (f.lmod == 'z')
 		return (get_unsigned_con(f, va_arg(*ap, size_t)));
 	return (get_unsigned_con(f, va_arg(*ap, unsigned int)));
 }
@@ -118,7 +118,7 @@ int	set_char_format_string(t_form form, va_list *ap)
 	char	partial;
 
 	ret = 0;
-	if (ft_strcmp(form.lmod, "l") == 0)
+	if (form.lmod == 'l')
 		return (print_wchar(form, ap));
 	partial = (char)va_arg(*ap, int);
 	if (!form.left_just && form.fw - 1 > 0)
@@ -155,7 +155,7 @@ int	set_string_format_string(t_form form, va_list *ap)
 	char	*partial;
 
 	ret = 0;
-	if (ft_strcmp(form.lmod, "l") == 0)
+	if (form.lmod == 'l')
 		return (print_wstring(form, ap));
 	partial = va_arg(*ap, char *);
 	if (!partial)
@@ -278,11 +278,12 @@ int set_octal_format_string(t_form form, va_list *ap)
 		ret += adjust_field_width(fw, "0");
 	if (form.pre > 0)
 		ret += adjust_integer_precision(form.pre - ft_strlen(partial));
-	ret += ft_vect_add(g_con_string, partial, ft_strlen(partial));
+	if (form.pre != 0 || ft_strcmp(partial, "0") != 0)
+		ret += ft_vect_add(g_con_string, partial, ft_strlen(partial));
 	if (form.left_just && form.fw - form.pre > 0)
 		ret += adjust_field_width(fw, " ");
 	ret += ft_strlen(partial);
-	//free(partial);
+	free(partial);
 	return (ret);
 }
 
@@ -315,7 +316,6 @@ int set_int_format_string(t_form form, va_list *ap)
 
 	ret = 0;
 	partial = get_int_partial(form, ap);
-	partial = ft_strcmp(partial, "0") == 0 && form.pre == 0 ? "" : partial;
 	fw = form.fw - ft_max(ft_strlen(partial), form.pre) -
 		(form.blank || form.sign);
 	if (!form.left_just && form.fw - form.pre > 0)
@@ -328,10 +328,11 @@ int set_int_format_string(t_form form, va_list *ap)
 		ret += ft_vect_add(g_con_string, " ", 1);
 	if (form.pre > 0)
 		ret += adjust_integer_precision(form.pre - ft_strlen(partial));
-	ret += ft_vect_add(g_con_string, partial, ft_strlen(partial));
+	if (form.pre != 0 || ft_strcmp(partial, "0") != 0)
+		ret += ft_vect_add(g_con_string, partial, ft_strlen(partial));
 	if (form.left_just && form.fw - form.pre > 0)
 		ret += adjust_field_width(fw, " ");
 	ret += ft_strlen(partial);
-	//free(partial);
+	free(partial);
 	return (ret + ft_strlen(partial));
 }
