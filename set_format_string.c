@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 17:59:06 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/17 20:53:40 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/18 17:49:11 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,15 +180,16 @@ int	set_color_format_string(const char *s, int *pos)
 	int	i;
 
 	i = 0;
-	while (g_color_tab[i].name && ft_memcmp(s + 1, g_color_tab[i].name, 3) == 0)
+	while (g_color_tab[i].name && ft_memcmp(s + 1, g_color_tab[i].name, 4) != 0)
 		i++;
 	if (g_color_tab[i].name)
 	{
-		(*pos) += 5;
+		*pos += 5;
 		return (ft_vect_add(g_con_string, g_color_tab[i].escape_code, 8));
 	}
 	(*pos)++;
-	return (ft_vect_add(g_con_string, (char *)s, 1));
+	//return (ft_vect_add(g_con_string, (char *)s, 1));
+	return (0);
 }
 
 int set_hex_format_string(t_form form, va_list *ap)
