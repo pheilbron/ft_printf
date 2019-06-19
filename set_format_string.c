@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 17:59:06 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/18 17:49:11 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/19 11:34:09 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		(*get_con(char type))(t_form, va_list *)
 char	*get_int_partial(t_form form, va_list *ap)
 {
 	if (ft_strcmp(form.lmod, "hh") == 0)
-		return (ft_lltoa((char)va_arg(*ap, int)));
+		return (ft_lltoa((signed char)va_arg(*ap, int)));
 	if (ft_strcmp(form.lmod, "h") == 0)
 		return (ft_lltoa((short)va_arg(*ap, int)));
 	if (ft_strcmp(form.lmod, "l") == 0)
@@ -93,32 +93,41 @@ char	*get_unsigned_partial(t_form f, va_list *ap)
 //	return (get_float_con(form.lmod, va_arg(*ap, double)));
 //}
 
-//char	*get_char_partial(t_form form, va_list *ap)
-//{
-//	if (ft_strcmp(form.lmod, "l") == 0)
-//		return ((char)va_arg(*ap, wint_t));
-//	return ((char)va_arg(*ap, int));
-//}
+int	print_wchar(t_form form, va_list *ap)
+{
+	int		ret;
+	int		i;
+	wchar_t	w_partial;
+	
+	w_partial = va_arg(*ap, wchar_t);
+	i = 0;
+	write(1, g_con_string, g_con_string->pos);
+	g_con_string->pos = 0;
+	ret = form.pre > 1 ? form.pre : 1;
+	if (!form.left_just && form.fw > i++)
+		write(1, " ", 1);
+	write(1, &w_partial, 1);
+	if (form.left_just && form.fw > i++)
+		write(1, " ", 1);
+	return (ret + i);
+}
 
-//int	set_char_format_string(t_form form, va_list *ap)
-//{
-//	int				ret;
-//	unsigned char	c;
-//	wchar_t			w;
-//
-//	if (ft_strcmp(form.lmod, "l") == 0)
-//	{
-//		write(1, g_con_string, g_con_string->len);
-//		g_con_string->len = 0;
-//		w_partial = (wchar_t)va_arg(*ap, wint_t);
-//		ret = form.pre > 0 ? form.pre : ft_wstrlen(w_partial);
-//		write(1, w_partial, ret);
-//		free(w_partial);
-//		return (ret);
-//	}
-//	c = va_arg(*ap, unsigned char);
-//	return (ft_vect_add(g_con_string, c, 1));
-//}
+int	set_char_format_string(t_form form, va_list *ap)
+{
+	int		ret;
+	char	partial;
+
+	ret = 0;
+	if (ft_strcmp(form.lmod, "l") == 0)
+		return (print_wchar(form, ap));
+	partial = (char)va_arg(*ap, int);
+	if (!form.left_just && form.fw - 1 > 0)
+		ret += adjust_field_width(form.fw - 1, " ");
+	ret += ft_vect_add(g_con_string, &partial, 1);
+	if (form.left_just && form.fw - 1 > 0)
+		ret += adjust_field_width(form.fw - 1, " ");
+	return (ret);
+}
 
 int	print_wstring(t_form form, va_list *ap)
 {
@@ -149,6 +158,8 @@ int	set_string_format_string(t_form form, va_list *ap)
 	if (ft_strcmp(form.lmod, "l") == 0)
 		return (print_wstring(form, ap));
 	partial = va_arg(*ap, char *);
+	if (!partial)
+		return (ft_vect_add(g_con_string, "(null)", 6));
 	precision = ft_strlen(partial);
 	if (form.pre > 0)
 		precision = ft_min(form.pre, ft_strlen(partial));
@@ -256,8 +267,8 @@ int set_octal_format_string(t_form form, va_list *ap)
 
 	ret = 0;
 	partial = get_unsigned_partial(form, ap);
+	partial = ft_strcmp(partial, "0") == 0 && form.pre == 0 ? "" : partial;
 	form.alt = (ft_strcmp(partial, "0") == 0) ? 0 : form.alt;
-	partial = ft_strcmp(partial, "0") == 0 && form.pre == 0 ? "\0" : partial;
 	fw = form.fw - ft_max(ft_strlen(partial), form.pre) - form.alt;
 	if (!form.left_just && form.fw - form.pre > 0 && !form.zero)
 		ret += adjust_field_width(fw, " ");
@@ -284,7 +295,7 @@ int set_unsigned_format_string(t_form form, va_list *ap)
 	ret = 0;
 	partial = get_unsigned_partial(form, ap);
 	fw = form.fw - ft_max(ft_strlen(partial), form.pre) - form.alt;
-	if (!form.left_just && form.fw - form.pre > 0 && !form.zero)
+	if (!form.left_just && form.fw - form.pre > 0)
 		ret += adjust_field_width(fw, form.zero ? "0" : " ");
 	if (form.pre > 0)
 		ret += adjust_integer_precision(form.pre - ft_strlen(partial));
@@ -304,9 +315,10 @@ int set_int_format_string(t_form form, va_list *ap)
 
 	ret = 0;
 	partial = get_int_partial(form, ap);
+	partial = ft_strcmp(partial, "0") == 0 && form.pre == 0 ? "" : partial;
 	fw = form.fw - ft_max(ft_strlen(partial), form.pre) -
 		(form.blank || form.sign);
-	if (!form.left_just && form.fw - form.pre > 0 && !form.zero)
+	if (!form.left_just && form.fw - form.pre > 0)
 		ret += adjust_field_width(fw, form.zero ? "0" : " ");
 	if (form.sign && partial[0] != '-')
 		ret += ft_vect_add(g_con_string, "+", 1);
@@ -318,6 +330,6 @@ int set_int_format_string(t_form form, va_list *ap)
 	if (form.left_just && form.fw - form.pre > 0)
 		ret += adjust_field_width(fw, " ");
 	ret += ft_strlen(partial);
-	free(partial);
+	//free(partial);
 	return (ret + ft_strlen(partial));
 }

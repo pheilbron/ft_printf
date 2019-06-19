@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:28:19 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/18 14:05:56 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/19 11:25:28 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	clean_tform(t_form *f)
 		f->lmod = (((!*f->lmod || ft_strcmp(f->lmod, "hh") ||
 				ft_strcmp(f->lmod, "h")) && f->type != 'x') ? "l": f->lmod);
 	}
-	f->zero = (f->zero && f->sign) ? 0 : f->zero;
 	if (!(f->type == 'a' || f->type == 'd' || f->type == 'e' || f->type == 'f'
 				|| f->type == 'f' || f->type == 'g' || f->type == 'i'))
 	{
@@ -83,6 +82,7 @@ void	clean_tform(t_form *f)
 				f->type != 'i' && f->type != 'd')
 			f->pre = 0;
 	}
+	f->zero = (f->left_just || f->pre > 0) ? 0 : f->zero;
 }
 
 int	conversion(const char **s, int *pos, va_list *ap)
@@ -104,6 +104,7 @@ int	conversion(const char **s, int *pos, va_list *ap)
 	ret = (*get_con)(format.type)(format, ap);
 	*s += *pos + 1;
 	*pos = 0;
+//	printf("zero: %c, sign: %c\n", format.zero + '0', format.sign + '0');
 	return (ret);
 }
 
@@ -111,11 +112,9 @@ int	ft_printf(const char *format, ...)
 {
 	va_list	ap;
 	int		i;
-	int		len;
 
 	va_start(ap, format);
 	i = 0;
-	len = 0;
 	g_con_string = ft_vect_new("", 0, 100);	
 	while (format[i])
 	{
@@ -123,17 +122,17 @@ int	ft_printf(const char *format, ...)
 			i++;
 		else
 		{
-			len += ft_vect_add(g_con_string, (char *)format, i);
+			ft_vect_add(g_con_string, (char *)format, i);
 			format += i;
 			i = 1;
 			if (format[i - 1] == '%')
-				len += conversion(&format, &i, &ap);
-			else if (format[i - 1] == '{')
-				len += set_color_format_string(format + i - 1, &i);
+				conversion(&format, &i, &ap);
+//			else if (format[i - 1] == '{')
+//				len += set_color_format_string(format + i - 1, &i);
 		}
 	}
-	len += ft_vect_add(g_con_string, (char *)format, i);
+	ft_vect_add(g_con_string, (char *)format, i);
 	write(1, g_con_string->data, g_con_string->pos);
 	va_end(ap);
-	return (len);
+	return (g_con_string->pos);
 }

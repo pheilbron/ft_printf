@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 15:53:05 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/17 15:34:00 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/19 09:51:01 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ int	set_octal_format_string(t_form form, va_list *ap);
 int	set_unsigned_format_string(t_form form, va_list *ap);
 int	set_int_format_string(t_form form, va_list *ap);
 int	set_mod_format_string(t_form form, va_list *ap);
-//int	set_char_format_string(t_form form, va_list *ap);
+int	set_char_format_string(t_form form, va_list *ap);
 int	set_string_format_string(t_form form, va_list *ap);
 
 t_con	g_contab[] =
 {
 //	{'a', &get_float_partial},
 //	{'b', &set_binary_format_string},
-//	{'c', &set_char_format_string},
+	{'c', &set_char_format_string},
 	{'d', &set_int_format_string},
 //	{'f', &get_float_partial},
 //	{'g', &get_float_partial},

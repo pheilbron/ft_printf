@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 16:16:24 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/11 16:19:07 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/19 10:49:46 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ char		*ft_lltoa(long long n)
 
 	sign = (n >= 0 ? 0 : 1);
 	if (n == LLONG_MIN)
-		return ("-9223372036854775808");
+		return (ft_strdup("-9223372036854775808"));
+	n *= (sign ? -1 : 1);
 	digit = 0;
 	i = 0;
 	while (n / ft_llpow(10, digit) >= 10)
