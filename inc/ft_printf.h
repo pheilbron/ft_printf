@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:29:18 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/19 13:38:13 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/20 10:23:35 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,17 @@ typedef struct	s_form
 	char		cap;
 }				t_form;
 
+typedef struct	s_fstring
+{
+	char		sign;
+	char		*alt;
+	char		fw;
+	char		*data;
+}				t_fstring;
+
 int		ft_printf(const char *format, ...);
 
-int		set_color_format_string(const char *s, int *pos);
+int		set_color_format_string(const char **s, int *pos);
 
 void	format_init(t_form *format);
 int		ft_islmod(char c);
@@ -49,5 +57,7 @@ int		adjust_integer_precision(int precision_len);
 int		adjust_alternate_form(t_form form, char *partial);
 
 int		(*get_con(char type))(t_form, va_list *);
+
+char	*get_unsigned_con(t_form form, unsigned long long value);
 
 #endif

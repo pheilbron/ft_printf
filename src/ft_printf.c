@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:28:19 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/19 16:07:02 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/06/20 09:53:33 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	ft_printf(const char *format, ...)
 			if (format[i - 1] == '%')
 				conversion(&format, &i, &ap);
 //			else if (format[i - 1] == '{')
-//				len += set_color_format_string(format + i - 1, &i);
+//				set_color_format_string(&format, &i);
 		}
 	}
 	ft_vect_add(g_con_string, (char *)format, i);
