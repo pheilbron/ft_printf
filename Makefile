@@ -1,56 +1,54 @@
 NAME		= libftprintf.a
 
-FILES		= ft_printf.c aux_func.c conversion.c \
-			  conversions/char.c \
-			  conversions/color.c \
-			  conversions/integer.c \
-			  conversions/mod.c \
-			  conversions/string.c \
-			  conversions/unsigned_integer.c \
-			  conversions/get_con.c \
-			  conversions/get_unsigned_con.c
+SRC			= ft_printf aux_func conversion \
+			  conversions/char \
+			  conversions/color \
+			  conversions/integer \
+			  conversions/mod \
+			  conversions/string \
+			  conversions/unsigned_integer \
+			  conversions/get_con \
+			  conversions/get_unsigned_con
 MAIN		= main.c
 
-SRC_DIR		= ./src
-OBJ_DIR	=./obj
+SRC_DIR		= src
+OBJ_DIR		= obj
 
-SRCS		= $(addprefix $(SRC_DIR),$(FILES))
+OBJS		= $(patsubst %, $(OBJ_DIR)/%.o, $(SRC))
 
-OBJS		= $(sort $(wildcard $(OBJ_DIR)/*.o))
 MAIN_OBJ	= $(MAIN:.c=.o)
 
 AR			= ar
 CC			= gcc
 LIB			= -Llibft -lft
-INC_FLAGS	= -I inc -I lib/includes
+INC_FLAGS	= -I inc -I lib/inc
 CFLAGS		= -Wall -Werror -Wextra
 DEBUG_FLAGS	= -g -fsanitize=address
 
-all: $(OBJ_DIR)/$(NAME)
+all: $(NAME)
 
-$(OBJ_DIR)/$(NAME): $(OBJS)
+$(NAME): $(OBJS)
 	@make -C lib/
-	ar -x lib/libft.a
-	$(AR) -rcs $@ $< 
-	ranlib $(NAME)
-	rm "__.SYMDEF SORTED"
-	mv $(NAME) .
+	@ar -x lib/libft.a && mv *.o $(OBJ_DIR)
+	@$(AR) -rcs $@ $(OBJS) $(OBJ_DIR)/*.o
+	@ranlib $(NAME)
+	@rm "__.SYMDEF SORTED"
 
-$(OBJ_DIR)/%.o: %.c
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INC_FLAGS) -c $< -o $@
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c 
+	@echo Compiling $<.
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(INC_FLAGS) -c $< -o $@
 
 test: 
-	$(CC) $(FLAGS) $(INC) -c $(MAIN) $(SRC)
-	$(CC) $(FLAGS) $(INC) -L. -lftprintf -o printf $(MAIN_OBJ) $(OBJ)
+	$(CC) $(FLAGS) $(INC_FLAGS) -c $(MAIN)
+	$(CC) $(FLAGS) $(INC_FLAGS) -L. -lftprintf -o printf $(MAIN_OBJ)
 
 debug: all
 	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC) $(LIB) -L. -lftprintf $(MAIN)
 
 clean: clean_debug
 	make clean -C lib/
-	rm -f obj/*.c
-	rm -f $(OBJ) $(MAIN_OBJ)
+	rm -rf $(OBJ_DIR) 
 
 clean_debug:
 	rm -f a.out
