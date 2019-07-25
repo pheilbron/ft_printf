@@ -9,7 +9,7 @@ SRC			= ft_printf aux_func conversion \
 			  conversions/unsigned_integer \
 			  conversions/get_con \
 			  conversions/get_unsigned_con
-MAIN		= main.c
+MAIN		= test/main.c
 
 SRC_DIR		= src
 OBJ_DIR		= obj
@@ -20,7 +20,7 @@ MAIN_OBJ	= $(MAIN:.c=.o)
 
 AR			= ar
 CC			= gcc
-LIB			= -Llibft -lft
+LIB			= -Llib -lft
 INC_FLAGS	= -I inc -I lib/inc
 CFLAGS		= -Wall -Werror -Wextra
 DEBUG_FLAGS	= -g -fsanitize=address
@@ -43,12 +43,15 @@ test:
 	$(CC) $(FLAGS) $(INC_FLAGS) -c $(MAIN)
 	$(CC) $(FLAGS) $(INC_FLAGS) -L. -lftprintf -o printf $(MAIN_OBJ)
 
+debug2: all
+	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC_FLAGS) lib/*.c test_vector.c
 debug: all
-	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC) $(LIB) -L. -lftprintf $(MAIN)
+	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC_FLAGS) src/*.c src/conversions/*.c lib/*.c $(MAIN)
 
 clean: clean_debug
 	make clean -C lib/
-	rm -rf $(OBJ_DIR) 
+	rm -rf $(OBJ_DIR)
+	rm -f $(MAIN_OBJ)	
 
 clean_debug:
 	rm -f a.out

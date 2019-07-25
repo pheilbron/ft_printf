@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:28:19 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/20 09:53:33 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/07/24 19:44:14 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	ft_printf(const char *format, ...)
 
 	va_start(ap, format);
 	i = 0;
-	g_con_string = ft_vect_new("", 0, 100);	
+	g_con_string = ft_vect_new("", 0, 4);	
 	while (format[i])
 	{
 		if (format[i] != '{' && format[i] != '%')
