@@ -6,7 +6,7 @@
 #    By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/30 13:56:22 by pheilbro          #+#    #+#              #
-#    Updated: 2019/06/20 11:34:31 by pheilbro         ###   ########.fr        #
+#    Updated: 2019/07/25 18:48:52 by pheilbro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,12 +31,15 @@ LIST		=	ft_lstnew.c ft_lstdelone.c ft_lstdel.c ft_lstadd.c \
 				ft_lstiter.c ft_lstmap.c
 VECTOR		=	ft_vect_add.c ft_vect_del.c ft_vect_extend.c ft_vect_new.c \
 				ft_vect_insert.c
+DSTRING		=	ft_dstr_add.c ft_dstr_del.c ft_dstr_extend.c ft_dstr_new.c \
+				ft_dstr_insert.c ft_dstr_init.c
 ADDN		=	ft_itoa.c ft_pow.c get_next_line.c ft_atoi_end.c ft_atoi.c \
 				ft_max.c ft_lltoa.c ft_ulltoa_base.c ft_wstrlen.c ft_min.c
 
 OBJ_DIR		=	./obj
 
-SRCS		=	$(MEMORY) $(STRING) $(PRINT) $(LIST) $(VECTOR) $(ADDN)
+SRCS		=	$(MEMORY) $(STRING) $(PRINT) $(LIST) $(VECTOR) $(DSTRING) \
+				$(ADDN)
 OBJS		=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 CC			=	gcc

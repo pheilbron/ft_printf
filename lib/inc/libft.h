@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 16:38:42 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/19 16:06:19 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/07/25 18:47:26 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ typedef struct	s_vector
 	size_t	size;
 	size_t	pos;
 }				t_vector;
+
+typedef	struct	s_dstring
+{
+	char	*buf;
+	size_t	cap;
+	size_t	pos;
+}				t_dstring;
 
 t_list			*ft_lstnew(void const *content, size_t content_size);
 void			ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
@@ -123,5 +130,11 @@ size_t			ft_vect_add(t_vector *v, char *s, size_t len);
 size_t			ft_vect_insert(t_vector *v, size_t pos, char *s, size_t len);
 size_t			ft_vect_extend(t_vector *v, size_t len);
 size_t			ft_vect_del(t_vector *v);
+
+void			ft_dstr_new(t_dstring *dstr, char *data,
+		size_t len, size_t cap);
+void			ft_dstr_add(t_dstring *dstr, char *new_data, size_t len);
+void			ft_dstr_del(t_dstring dstr);
+size_t			ft_dstr_extend(t_dstring *dstr, size_t len);
 
 #endif
