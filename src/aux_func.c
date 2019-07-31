@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 11:18:55 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/07/30 19:33:47 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/07/30 20:12:10 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ int	is_data_lmod(char c)
 
 int	is_data_conversion(char c)
 {
-	return (c == 's' || c == 'S' || c == 'p' || c == 'd' || c == 'D'
-			|| c == 'i' || c == 'o' || c == 'O' || c == 'u' || c == 'U'
-			|| c == 'x' || c == 'X' || c == 'c' || c == 'C');
+	return ((c >= 'a' && c <= 'g') || (c >= 'A' && c<= 'G') || c == 'i' ||
+			c == 'k' || (c >= 'm' && c <= 'p') || c == 'O' || c == 'r' ||
+			c == 's' || c == 'S' || c == 'u' || c == 'U' ||
+			c == 'x' || c == 'X' || c == '%');
 }
 
 int	is_data_flag(char c)

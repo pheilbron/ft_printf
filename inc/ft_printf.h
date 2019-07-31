@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:29:18 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/07/30 19:33:20 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/07/30 19:52:39 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,20 @@
 
 # include "libft.h"
 
+# define _ALT 1
+# define _ZERO 2
+# define _LEFT_JUST 4
+# define _BLANK 8
+# define _SIGN 16
+
 typedef struct	s_form
 {
-	char		alt;
-	char		zero;
-	char		left_just;
-	char		blank;
-	char		sign;
-	int			fw;
-	int			pre;
+	uint8_t			flags;
+	int				fw;
+	int				pre;
 	unsigned char	lmod;
-	char		type;
-	char		cap;
+	char			type;
+	char			cap;
 }				t_form;
 
 typedef struct	s_fstring
@@ -48,9 +50,10 @@ int		ft_printf(const char *format, ...);
 int		set_color_format_string(const char **s, int *pos);
 
 void	format_init(t_form *format);
-int		ft_islmod(char c);
-int		ft_isconversion(char c);
-int		ft_isflag(char c);
+int		is_data_lmod(char c);
+int		is_data_conversion(char c);
+int		is_data_flag(char c);
+int		is_con_indicator(char c);
 
 int		adjust_field_width(int fw_len, char *pad);
 int		adjust_integer_precision(int precision_len);

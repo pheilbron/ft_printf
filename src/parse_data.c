@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 19:30:58 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/07/30 19:32:00 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/07/30 19:55:34 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ void	set_data_flags(const char **s, int *pos, t_form *format)
 	while (is_data_flag((*s)[*pos]))
 	{
 		if ((*s)[*pos] == '#')
-			format->alt = 1;
+			format->flags |= _ALT;
 		else if ((*s)[*pos] == '0')
-			format->zero = 1;
+			format->flags |= _ZERO;
 		else if ((*s)[*pos] == '-')
-			format->left_just = 1;
+			format->flags |= _LEFT_JUST;
 		else if ((*s)[*pos] == '+')
-			format->sign = 1;
+			format->flags |= _SIGN;
 		else if ((*s)[*pos] == ' ')
-			format->blank = 1;
+			format->flags = _BLANK;
 		(*pos)++;
 	}
 }
