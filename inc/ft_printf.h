@@ -39,27 +39,27 @@ typedef struct	s_form
 
 typedef struct	s_fstring
 {
-	char		sign;
-	char		*alt;
-	char		fw;
-	char		*data;
+	char	sign;
+	char	*alt;
+	char	fw;
+	char	*data;
 }				t_fstring;
 
-int		ft_printf(const char *format, ...);
-int		ft_sprintf(char *str, const char *format, ...);
+int				ft_printf(const char *format, ...);
+int				ft_sprintf(char *str, const char *format, ...);
 
-void	format_init(t_form *format);
-int		is_data_lmod(char c);
-int		is_data_conversion(char c);
-int		is_data_flag(char c);
-int		is_con_indicator(char c);
+void			format_init(t_form *format);
+int				is_data_lmod(char c);
+int				is_data_conversion(char c);
+int				is_data_flag(char c);
+int				is_con_indicator(char c);
 
-int		adjust_field_width(int fw_len, char *pad);
-int		adjust_integer_precision(int precision_len);
-int		adjust_alternate_form(t_form form, char *partial);
+int				adjust_field_width(int fw_len, char *pad);
+int				adjust_integer_precision(int precision_len);
+int				adjust_alternate_form(t_form form, char *partial);
 
-int		(*get_con(char type))(t_form, va_list *);
+int				(*get_con(char type))(t_form, va_list *);
 
-char	*get_unsigned_con(t_form form, unsigned long long value);
+char			*get_unsigned_con(t_form form, unsigned long long value);
 
 #endif
