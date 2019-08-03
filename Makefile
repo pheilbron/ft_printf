@@ -1,6 +1,6 @@
 NAME		= libftprintf.a
 
-SRC			= ft_printf aux_func conversion \
+SRC			= ft_printf ft_sprintf aux_func conversion \
 			  conversions/char \
 			  conversions/color \
 			  conversions/integer \
@@ -62,4 +62,3 @@ fclean: clean clean_debug
 	rm -f $(NAME)
 
 re: fclean all
-

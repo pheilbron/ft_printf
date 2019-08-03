@@ -6,14 +6,12 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 17:59:06 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/20 10:12:13 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/02 16:31:05 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft.h"
-
-extern	t_vector	*g_con_string;
 
 int	print_wchar(t_form form, va_list *ap)
 {
