@@ -1,6 +1,6 @@
 NAME		= libftprintf.a
 
-SRC			= ft_printf ft_sprintf aux_func conversion \
+SRC			= ft_printf ft_sprintf parse_data format aux_func conversion \
 			  conversions/char \
 			  conversions/color \
 			  conversions/integer \

@@ -19,8 +19,6 @@
 # include <wchar.h>
 # include <inttypes.h>
 
-# include "libft.h"
-
 # define _ALT 1
 # define _ZERO 2
 # define _LEFT_JUST 4
