@@ -14,7 +14,7 @@
 
 extern t_vector	*g_con_string;
 
-int		adjust_field_width(int	fw_len, char *pad)
+int		adjust_field_width(int fw_len, char *pad)
 {
 	int	i;
 	size_t	start;

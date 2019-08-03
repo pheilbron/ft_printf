@@ -46,8 +46,7 @@ typedef struct	s_fstring
 }				t_fstring;
 
 int		ft_printf(const char *format, ...);
-
-int		set_color_format_string(const char **s, int *pos);
+int		ft_sprintf(char *str, const char *format, ...);
 
 void	format_init(t_form *format);
 int		is_data_lmod(char c);

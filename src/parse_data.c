@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "ft_ctype.h"
 
 void	set_data_flags(const char **s, int *pos, t_form *format)
 {

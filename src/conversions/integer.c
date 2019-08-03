@@ -11,26 +11,37 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft.h"
+#include "ft_stdlib.h"
 
-extern	t_vector	*g_con_string;
-
-char	*get_int_partial(t_form form, va_list *ap)
+t_fstring	get_int_partial(t_form form, va_list *ap)
 {
+	t_fstring	f;
+
 	if (form.lmod == ('h' + 'h'))
-		return (ft_lltoa((signed char)va_arg(*ap, int)));
-	if (form.lmod == 'h')
-		return (ft_lltoa((short)va_arg(*ap, int)));
-	if (form.lmod == 'l')
-		return (ft_lltoa(va_arg(*ap, long)));
-	if (form.lmod == ('l' + 'l'))
-		return (ft_lltoa(va_arg(*ap, long long)));
-	if (form.lmod == 'j')
-		return (ft_lltoa(va_arg(*ap, intmax_t)));
-	if (form.lmod == 'z')
-		return (ft_lltoa(va_arg(*ap, size_t)));
-	return (ft_itoa(va_arg(*ap, int)));
+		ft_printf_lltoa((signed char)va_arg(*ap, int), &f);
+	else if (form.lmod == 'h')
+		ft_printf_lltoa((short)va_arg(*ap, int), &f);
+	else if (form.lmod == 'l')
+		ft_printf_lltoa(va_arg(*ap, long), &f);
+	else if (form.lmod == ('l' + 'l'))
+		ft_printf_lltoa(va_arg(*ap, long long), &f);
+	else if (form.lmod == 'j')
+		ft_printf_lltoa(va_arg(*ap, intmax_t), &f);
+	else if (form.lmod == 'z')
+		ft_printf_lltoa(va_arg(*ap, size_t), &f);
+	else
+		ft_itoa(va_arg(*ap, int));
+	if (
 }
+
+int	set_int_fstring(t_dstring *s, t_form form, va_list *ap)
+{
+	t_fstring	f;
+
+	f.data = get_int_partial(form, ap);
+	f.sign = '\0';
+	if (form.sign)
+		f.sign = (*(f.data) == '-' ? '-' : '+');
 
 int set_int_format_string(t_form form, va_list *ap)
 {
