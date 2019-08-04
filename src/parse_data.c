@@ -26,7 +26,7 @@ void	set_data_flags(const char **s, int *pos, t_form *format)
 		else if ((*s)[*pos] == '+')
 			format->flags |= _SIGN;
 		else if ((*s)[*pos] == ' ')
-			format->flags = _BLANK;
+			format->flags |= _BLANK;
 		(*pos)++;
 	}
 }

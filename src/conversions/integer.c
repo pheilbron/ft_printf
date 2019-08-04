@@ -12,6 +12,33 @@
 
 #include "ft_printf.h"
 #include "ft_stdlib.h"
+#include "ft_string.h"
+
+void		get_int_precision(t_fstring *f, int len, int precision)
+{
+	int	i;
+
+	if ((f->pre = malloc(sizeof(*f->pre) * (precision - len + 1))))
+	{
+		i = len;
+		while (i < precision)
+			f->pre[i++ - len] = '0';
+		f->pre[i - len] = '\0';
+	}
+}
+
+void		get_int_fw(t_fstring *f, int len, int precision, char fw_char)
+{
+	int	i;
+
+	if ((f->fw = malloc(sizeof(*f->fw) * (fw - len + 1))))
+	{
+		i = len;
+		while (i < fw)
+			f->fw[i++ - len] = fw_char;
+		f->fw[i - len] = '\0';
+	}
+}
 
 t_fstring	get_int_partial(t_form form, va_list *ap)
 {
@@ -31,43 +58,35 @@ t_fstring	get_int_partial(t_form form, va_list *ap)
 		ft_printf_lltoa(va_arg(*ap, size_t), &f);
 	else
 		ft_itoa(va_arg(*ap, int));
-	if (
+	f.pre = NULL;
+	f.fw = NULL;
 }
 
 int	set_int_fstring(t_dstring *s, t_form form, va_list *ap)
 {
 	t_fstring	f;
+	int			partial_len;
 
-	f.data = get_int_partial(form, ap);
-	f.sign = '\0';
-	if (form.sign)
-		f.sign = (*(f.data) == '-' ? '-' : '+');
-
-int set_int_format_string(t_form form, va_list *ap)
-{
-	int		ret;
-	int		fw;
-	char	*partial;
-
-	ret = 0;
-	partial = get_int_partial(form, ap);
-	fw = form.fw - ft_max(ft_strlen(partial), form.pre) -
-		(form.blank || form.sign);
-	if (!form.left_just && form.fw - form.pre > 0)
-		ret += adjust_field_width(fw, form.zero ? "0" : " ");
-	if (form.sign && partial[0] != '-')
-		ret += ft_vect_add(g_con_string, "+", 1);
-	else if (form.sign && partial[0] == '-')
-		ret += ft_vect_add(g_con_string, partial++, 1);
-	else if (form.blank && partial[0] != '-')
-		ret += ft_vect_add(g_con_string, " ", 1);
-	if (form.pre > 0)
-		ret += adjust_integer_precision(form.pre - ft_strlen(partial));
-	if (form.pre != 0 || ft_strcmp(partial, "0") != 0)
-		ret += ft_vect_add(g_con_string, partial, ft_strlen(partial));
-	if (form.left_just && form.fw - form.pre > 0)
-		ret += adjust_field_width(fw, " ");
-	ret += ft_strlen(partial);
-	free(partial);
-	return (ret + ft_strlen(partial));
+	f = get_int_partial(form, ap);
+	partial_len = ft_strlen(f.partial);
+	if (form.pre >= 0 && form.pre > partial_len)
+		ft_get_int_precision(&f, partial_len, form.pre);
+	partial_len += (f.pre ? ft_strlen(f.pre) : 0) +
+		((form.flags | _ZERO) || (form.flags | _BLANK) ? 1 : 0);
+	if (form.fw > 0 && form.fw > partial_len)
+		ft_get_int_fw(&f, partial_len, form.fw);
+	partial_len = 0;
+	if (!((form.flags | _ZERO) || (form.flags | _LEFT_JUST)))
+		partial_len = ft_dstr_add(s, f.fw, ft_strlen(f.fw));
+	if (form.flags | _SIGN || form.flags | _BLANK)
+		partial_len = ft_dstr_add(s, &(f.sign), 1);
+	if ((form.flags | _ZERO) && !(form.flags | _LEFT_JUST))
+		partial_len = ft_dstr_add(s, f.fw, ft_strlen(f.fw));
+	if (f.pre)
+		partial_len = ft_dstr_add(s, f.pre, ft_strlen(f.pre));
+	if (!(form.pre == 0 && ft_strcmp(f.partial, "0"))) 
+		partial_len = ft_dstr_add(s, f.partial, ft_strlen(f.partial));
+	if (form.flags | _LEFT_JUST)
+		partial_len = ft_dstr_add(s, f.fw, ft_strlen(f.fw));
+	return (partial_len);
 }

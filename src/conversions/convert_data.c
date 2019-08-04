@@ -2,7 +2,7 @@
 #include "ft_printf.h"
 #include "ft_printf_conversions.h"
 
-int		(*get_con(char type))(t_form, va_list *)
+int		(*convert_data(char type))(t_form, va_list *)
 {
 	size_t	i;
 	t_con	contab[];

@@ -1,50 +1,37 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   set_format_string.c                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/17 17:59:06 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/02 16:31:05 by pheilbro         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft.h"
+#include "ft_dstring.h"
 
-int	print_wchar(t_form form, va_list *ap)
+void	ft_get_char_fw(t_fstring *f, int fw)
 {
-	int		ret;
-	int		i;
-	wchar_t	w_partial;
-	
-	w_partial = va_arg(*ap, wchar_t);
-	i = 0;
-	write(1, g_con_string, g_con_string->pos);
-	g_con_string->pos = 0;
-	ret = form.pre > 1 ? form.pre : 1;
-	if (!form.left_just && form.fw > i++)
-		write(1, " ", 1);
-	write(1, &w_partial, 1);
-	if (form.left_just && form.fw > i++)
-		write(1, " ", 1);
-	return (ret + i);
+	int	i;
+
+	if ((f->fw = malloc(sizeof(*f->fw) * (fw))))
+	{
+		i = 0;
+		while (i < fw - 1)
+			f->fw[i++] = ' ';
+		f->fw[i] = '\0';
+	}
 }
 
-int	set_char_format_string(t_form form, va_list *ap)
+int	set_char_fstring(t_dstring *s, t_form form, va_list *ap)
 {
-	int		ret;
-	char	partial;
+	t_fstring	f;
+	int			len;
 
-	ret = 0;
+	len = 0;
 	if (form.lmod == 'l')
-		return (print_wchar(form, ap));
-	partial = (char)va_arg(*ap, int);
-	if (!form.left_just && form.fw - 1 > 0)
-		ret += adjust_field_width(form.fw - 1, " ");
-	ret += ft_vect_add(g_con_string, &partial, 1);
-	if (form.left_just && form.fw - 1 > 0)
-		ret += adjust_field_width(form.fw - 1, " ");
-	return (ret);
+		f.partial = (char *)((wchar_t)va_arg(*ap, int));
+	else
+		f.partial = (char *)((char)va_arg(*ap, int));
+	if (form.fw > 1)
+		ft_get_char_fw(&f, form.fw);
+	if (!(form.flags | _LEFT_JUST) && form.fw > 1)
+		len += ft_dstr_add(s, f.fw, ft_strlen(f.fw));
+	len += ft_dstr_add(s, f.partial, ft_strlen(f.partial));
+	if (form.flags | _LEFT_JUST && form.fw > 1)
+		len += ft_dstr_add(s, f.fw, ft_strlen(f.fw));
+	ft_fstring_free(&f);
+	return (len);
 }

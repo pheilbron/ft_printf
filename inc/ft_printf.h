@@ -39,8 +39,9 @@ typedef struct	s_fstring
 {
 	char	sign;
 	char	*alt;
-	char	fw;
-	char	*data;
+	char	*fw;
+	char	*precision;
+	char	*partial;
 }				t_fstring;
 
 int				ft_printf(const char *format, ...);
