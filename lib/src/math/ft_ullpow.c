@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dstr_insert.c                                   :+:      :+:    :+:   */
+/*   ft_ullpow.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/04 18:27:48 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/04 18:31:40 by pheilbro         ###   ########.fr       */
+/*   Created: 2019/08/04 17:06:10 by pheilbro          #+#    #+#             */
+/*   Updated: 2019/08/04 17:06:24 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_dstring.h"
-#include "ft_string.h"
-
-size_t	ft_dstr_insert(t_dstring *s, char *new_data, size_t len, size_t pos)
+unsigned long long	ft_ullpow(int base, int exp)
 {
-	if (s->cap < s->pos + len + 1)
-		ft_dstr_resize(s, s->cap * 2 + (s->cap >= len + 1 ? 0 : len + 1));
-	ft_memcpy(s->buf + pos + len , s->buf + pos, len);
-	ft_memcpy(s->buf + pos, new_data, len);
-	s->buf[s->pos + len] = '\0';
-	s->pos += len;
-	return (len);
+	long long	ret;
+
+	ret = 1;
+	while (exp-- > 0)
+		ret *= (unsigned long long)base;
+	return (ret);
 }

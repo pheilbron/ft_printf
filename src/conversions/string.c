@@ -1,39 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_format_string.c                                :+:      :+:    :+:   */
+/*   string.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/17 17:59:06 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/20 10:13:27 by pheilbro         ###   ########.fr       */
+/*   Created: 2019/08/04 17:40:33 by pheilbro          #+#    #+#             */
+/*   Updated: 2019/08/04 17:54:52 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "ft_dstring.h"
+#include "ft_string.h"
 
 int	set_string_fstring(t_dstring *s, t_form form, va_list *ap)
 {
 	t_fstring	f;
 	int			len;
 
-	len = 0;
+	ft_fstring_init(&f);
 	if (form.lmod == 'l')
 		f.partial = (char *)va_arg(*ap, wchar_t *);
 	else
 		f.partial = va_arg(*ap, char *);
 	if (!f.partial)
-		return (ft_dstring_add(s, "(null)", 6));
-	if (form.pre > 0 && form.pre < ft_strlen(f.partial))
-		f.partial[form.pre] = '\0';
-	if (form.fw > ft_strlen(f.partial))
-		ft_get_string_fw(&f, form.fw, ft_strlen(f.partial));
-	if (!(form.flags | _LEFT_JUST) && f.fw)
-		len += ft_dstr_add(s, f.fw, ft_strlen(f.fw));
-	len += ft_dstr_add(s, f.partial, ft_strlen(f.partial));
-	if (form.flags | _LEFT_JUST && f.fw)
-		len += ft_dstr_add(s, f.fw, ft_strlen(f.fw));
+		f.partial = ft_strdup("(null)");
+	f.pre = form.pre - len;
+	f.head = (f.pre_i = s->pos);
+	if (f.pre > 0 && f.pre < ft_strlen(f.partial))
+		f.partial[f.pre] = '\0';
+	len = ft_dstr_add(s, f.partial, ft_strlen(f.partial));
+	if ((f.fw = form.fw - len) > 0)
+		len += ft_printf_adjust_fw(s, f, form);
 	ft_fstring_free(&f);
 	return (len);
 }

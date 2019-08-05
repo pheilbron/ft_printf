@@ -6,11 +6,21 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 19:12:41 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/07/30 19:39:20 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/04 16:48:08 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+void	format_init(t_form *format)
+{
+	format->flags = 0;
+	format->fw = 0;
+	format->pre = -1;
+	format->lmod = 0;
+	format->type = 0;
+	format->cap = 0;
+}
 
 void	format_data(t_dstring *s, char **f_string, int *i, va_list *ap)
 {

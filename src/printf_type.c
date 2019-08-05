@@ -1,30 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   aux_func.c                                         :+:      :+:    :+:   */
+/*   printf_type.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/22 11:18:55 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/07/30 20:12:10 by pheilbro         ###   ########.fr       */
+/*   Created: 2019/08/04 18:39:47 by pheilbro          #+#    #+#             */
+/*   Updated: 2019/08/04 18:39:51 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-void	format_init(t_form *format)
-{
-	format->alt = 0;
-	format->zero = 0;
-	format->left_just = 0;
-	format->blank = 0;
-	format->sign = 0;
-	format->fw = 0;
-	format->pre = -1;
-	format->lmod = 0;
-	format->type = 0;
-	format->cap = 0;
-}
 
 int	is_data_lmod(char c)
 {

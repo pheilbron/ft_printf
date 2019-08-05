@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_unsigned_con.c                                 :+:      :+:    :+:   */
+/*   printf_adjust_fw.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/20 10:10:41 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/20 10:24:14 by pheilbro         ###   ########.fr       */
+/*   Created: 2019/08/04 18:39:22 by pheilbro          #+#    #+#             */
+/*   Updated: 2019/08/04 18:39:29 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft.h"
+#include "ft_dstring.h"
 
-char	*get_unsigned_con(t_form form, unsigned long long value)
+int		printf_adjust_fw(t_dstring *s, t_fstring f, t_form form)
 {
-	if (form.type == 'b')
-		return (ft_ulltoa_base(value, 2, form.cap));
-	if (form.type == 'o')
-		return (ft_ulltoa_base(value, 8, form.cap));
-	if (form.type == 'x')
-		return (ft_ulltoa_base(value, 16, form.cap));
-	if (form.type == 'u')
-		return (ft_ulltoa_base(value, 10, form.cap));
-	return (ft_ulltoa_base(value, 10, form.cap));
+	if (form.flags | _LEFT_JUST)
+		return (ft_dstr_add_nc(s, ' ', f.fw));
+	else if (form.flags | _ZERO)
+		return (ft_dstr_insert_nc(s, '0', f.fw, f.pre_i));
+	return (ft_dstr_insert_nc(s, ' ', f.fw, f.head));
 }

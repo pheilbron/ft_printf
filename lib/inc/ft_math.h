@@ -6,15 +6,17 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/28 07:50:06 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/07/28 07:51:29 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/04 18:37:30 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MATH_H
 # define FT_MATH_H
 
-long	ft_pow(int base, int exp);
-int		ft_max(int a, int b);
-int		ft_min(int a, int b);
+long				ft_pow(int base, int exp);
+long long			ft_llpow(int base, int exp);
+unsigned long long	ft_llpow(int base, int exp);
+int					ft_max(int a, int b);
+int					ft_min(int a, int b);
 
 #endif

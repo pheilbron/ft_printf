@@ -6,131 +6,112 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 10:08:46 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/06/20 10:12:47 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/04 18:13:48 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft.h"
+#include "ft_dstring.h"
+#include "ft_string.h"
+#include "ft_math.h"
 
-extern	t_vector	*g_con_string;
-
-char	*get_unsigned_partial(t_form f, va_list *ap)
+void	ft_printf_ulltoa_base(unsigned long long n, int base, int cap,
+		t_fstring *f)
 {
+	int		digit;
+	int		i;
+	char	*values;
+	char	*c_values;
+
+	digit = 0;
+	i = 0;
+	values = "0123456789abcdef";
+	c_values = "0123456789ABCDEF";
+	while (n / ft_ullpow(base, digit) >= (unsigned int)base)
+		digit++;
+	if ((f->partial = (char *)malloc(sizeof(*(f->partial)) * (digit + 2))))
+	{
+		while (digit >= 0)
+		{
+			if (cap)
+				f->partial[i++] = values_c[n / ft_ullpow(base, digit)];
+			else
+				f->partial[i++] = values[n / ft_ullpow(base, digit)];
+			n -= (n / ft_ullpow(base, digit)) * ft_ullpow(base, digit);
+			digit--;
+		}
+		f->partial[i] = '\0';
+	}
+}
+
+void	get_unsigned_con(t_form form, unsigned long long value, t_fstring *f)
+{
+	if (form.type == 'b')
+	{
+		ft_printf_ulltoa_base(value, 2, form.cap, f);
+		if ((form.flags | _ALT) && form.cap)
+			f.alt = ft_strdup("0B");
+		else if (form.flags | _ALT)
+			f.alt = ft_strdup("0b");
+	}
+	else if (form.type == 'o')
+	{
+		ft_printf_ulltoa_base(value, 8, form.cap, f);
+		if ((form.flags | _ALT) && f->partial[0] != '0')
+			f.alt = ft_strdup("0");
+	}
+	else if (form.type == 'x')
+	{
+		ft_printf_ulltoa_base(value, 16, form.cap, f);
+		if ((form.flags | _ALT) && form.cap)
+			f.alt = ft_strdup("0X");
+		else if (form.flags | _ALT)
+			f.alt = ft_strdup("0x");
+	}
+	else
+		ft_printf_ulltoa_base(value, 10, form.cap, f);
+}
+
+t_fstring	get_unsigned_partial(t_form form, va_list *ap)
+{
+	t_fstring	f;
+
 	if (f.lmod == ('h' + 'h'))
-		return (get_unsigned_con(f, (unsigned char)va_arg(*ap, unsigned int)));
-	if (f.lmod == 'h')
-		return (get_unsigned_con(f, (unsigned short)va_arg(*ap, unsigned int)));
-	if (f.lmod == 'l')
-		return (get_unsigned_con(f, va_arg(*ap, unsigned long)));
-	if (f.lmod == ('l' + 'l'))
-		return (get_unsigned_con(f, va_arg(*ap, unsigned long long)));
-	if (f.lmod == 'j')
-		return (get_unsigned_con(f, va_arg(*ap, uintmax_t)));
-	if (f.lmod == 'z')
-		return (get_unsigned_con(f, va_arg(*ap, size_t)));
-	return (get_unsigned_con(f, va_arg(*ap, unsigned int)));
+		get_unsigned_con(form, (unsigned char)va_arg(*ap, unsigned int), &f);
+	else if (f.lmod == 'h')
+		get_unsigned_con(form, (unsigned short)va_arg(*ap, unsigned int), &f);
+	else if (f.lmod == 'l')
+		get_unsigned_con(form, va_arg(*ap, unsigned long), &f);
+	else if (f.lmod == ('l' + 'l'))
+		get_unsigned_con(form, va_arg(*ap, unsigned long long), &f);
+	else if (f.lmod == 'j')
+		get_unsigned_con(form, va_arg(*ap, uintmax_t), &f);
+	else if (f.lmod == 'z')
+		get_unsigned_con(form, va_arg(*ap, size_t), &f);
+	else
+		get_unsigned_con(form, va_arg(*ap, unsigned int), &f);
+
 }
 
-int set_hex_format_string(t_form form, va_list *ap)
+int set_unsigned_fstring(t_dstring *s, t_form form, va_list *ap)
 {
-	int		ret;
-	int		fw;
-	char	*partial;
+	t_fstring	f;
+	int			len;
 
-	ret = 0;
-	partial = get_unsigned_partial(form, ap);
-	form.alt = (ft_strcmp(partial, "0") == 0) ? 0 : form.alt;
-	fw = form.fw - (form.alt * 2) -
-		ft_max((ft_strcmp(partial, "0") ? ft_strlen(partial) : 0), form.pre);
-	if (!form.left_just && form.fw - form.pre > 0 && !form.zero)
-		ret += adjust_field_width(fw, " ");
-	if (form.alt)
-		ret += adjust_alternate_form(form, partial);
-	if (!form.left_just && form.fw - form.pre > 0 && form.zero)
-		ret += adjust_field_width(fw, "0");
-	if (form.pre > 0)
-		ret += adjust_integer_precision(form.pre - ft_strlen(partial));
-	if (form.pre != 0 || ft_strcmp(partial, "0") != 0)
-		ret += ft_vect_add(g_con_string, partial, ft_strlen(partial));
-	if (form.left_just && form.fw - form.pre > 0)
-		ret += adjust_field_width(fw, " ");
-	ret += ft_strlen(partial);
-	free(partial);
-	return (ret);
-}
 
-int set_binary_format_string(t_form form, va_list *ap)
-{
-	int		ret;
-	int		fw;
-	char	*partial;
-
-	ret = 0;
-	partial = get_unsigned_partial(form, ap);
-	form.alt = (ft_strcmp(partial, "0") == 0) ? 0 : form.alt;
-	fw = form.fw - (form.alt * 2) -
-		ft_max((ft_strcmp(partial, "0") ? ft_strlen(partial) : 0), form.pre);
-	if (!form.left_just && form.fw - form.pre > 0 && !form.zero)
-		ret += adjust_field_width(fw, " ");
-	if (form.alt)
-		ret += adjust_alternate_form(form, partial);
-	if (!form.left_just && form.fw - form.pre > 0 && form.zero)
-		ret += adjust_field_width(fw, "0");
-	if (form.pre > 0)
-		ret += adjust_integer_precision(form.pre - ft_strlen(partial));
-	if (form.pre != 0 || ft_strcmp(partial, "0") != 0)
-		ret += ft_vect_add(g_con_string, partial, ft_strlen(partial));
-	if (form.left_just && form.fw - form.pre > 0)
-		ret += adjust_field_width(fw, " ");
-	ret += ft_strlen(partial);
-	free(partial);
-	return (ret);
-}
-
-int set_octal_format_string(t_form form, va_list *ap)
-{
-	int		ret;
-	int		fw;
-	char	*partial;
-
-	ret = 0;
-	partial = get_unsigned_partial(form, ap);
-	fw = form.fw - ft_max(ft_strlen(partial), form.pre) - form.alt;
-	if (!form.left_just && form.fw - form.pre > 0 && !form.zero)
-		ret += adjust_field_width(fw, " ");
-	if (form.alt)
-		ret += adjust_alternate_form(form, partial);
-	if (!form.left_just && form.fw - form.pre > 0 && form.zero)
-		ret += adjust_field_width(fw, "0");
-	if (form.pre > 0)
-		ret += adjust_integer_precision(form.pre - ft_strlen(partial));
-	if (form.pre != 0 || ft_strcmp(partial, "0") != 0)
-		ret += ft_vect_add(g_con_string, partial, ft_strlen(partial));
-	if (form.left_just && form.fw - form.pre > 0)
-		ret += adjust_field_width(fw, " ");
-	ret += ft_strlen(partial);
-	free(partial);
-	return (ret);
-}
-
-int set_unsigned_format_string(t_form form, va_list *ap)
-{
-	int		ret;
-	int		fw;
-	char	*partial;
-
-	ret = 0;
-	partial = get_unsigned_partial(form, ap);
-	fw = form.fw - ft_max(ft_strlen(partial), form.pre) - form.alt;
-	if (!form.left_just && form.fw - form.pre > 0)
-		ret += adjust_field_width(fw, form.zero ? "0" : " ");
-	if (form.pre > 0)
-		ret += adjust_integer_precision(form.pre - ft_strlen(partial));
-	ret += ft_vect_add(g_con_string, partial, ft_strlen(partial));
-	if (form.left_just && form.fw - form.pre > 0)
-		ret += adjust_field_width(fw, " ");
-	ret += ft_strlen(partial);
-	free(partial);
-	return (ret);
+	ft_fstring_init(&f);
+	len = ft_strlen((f = get_unsigned_partial(form, ap)).partial);
+	f.pre = form.pre - len;
+	len = 0;
+	f.head = s->pos;
+	if (form.alt && ft_strcmp(f.partial, "0") != 0)
+		f.pre_i = f.head + (len += ft_dstr_add(s, f.alt, ft_strlen(f.alt)));
+	if (f.pre > 0)
+		len += ft_dstr_add_nc(s, '0', f.pre);
+	if (!(form.pre == 0 && ft_strcmp(f.partial, "0")))
+		len += ft_dstr_add(s, f.partial, ft_strlen(f.partial));
+	if ((f.fw = form.fw - len) > 0)
+		len += ft_printf_adjust_fw(s, f, form);
+	ft_fstring_free(&f);
+	return (len);
 }

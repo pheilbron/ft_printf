@@ -6,18 +6,19 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/28 07:58:02 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/07/29 13:27:31 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/04 18:31:50 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_dstring.h"
 #include "ft_string.h"
 
-void	ft_dstr_add(t_dstring *s, char *new_data, size_t len)
+size_t	ft_dstr_add(t_dstring *s, char *new_data, size_t len)
 {
-	if (s->cap < s->pos + len)
-		ft_dstr_resize(s, s->cap * 2 + (s->cap >= len ? 0 : len));
+	if (s->cap < s->pos + len + 1)
+		ft_dstr_resize(s, s->cap * 2 + (s->cap >= len + 1 ? 0 : len + 1));
 	ft_memcpy(s->buf + s->pos, new_data, len);
 	s->buf[s->pos + len] = '\0';
 	s->pos += len;
+	return (len);
 }
