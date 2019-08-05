@@ -6,12 +6,13 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 19:30:58 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/04 18:48:28 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/04 20:42:14 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "ft_ctype.h"
+#incldue "ft_stdlib.h"
 
 void	set_data_flags(const char **s, int *pos, t_form *format)
 {
