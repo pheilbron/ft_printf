@@ -57,15 +57,15 @@ void	ft_form_clean(t_form *f)
 	if (f->type >= 'A' && f->type <= 'Z')
 	{
 		f->type += 'a' - 'A';
-		f->cap = 1;
+		f->flags |= 1 << CAP;
 		f->lmod = (((!f->lmod || f->lmod == ('h' + 'h') ||
 				f->lmod == 'h') && f->type != 'x') ? 'l': f->lmod);
 	}
 	if (!(f->type == 'a' || f->type == 'd' || f->type == 'e' || f->type == 'f'
 				|| f->type == 'f' || f->type == 'g' || f->type == 'i'))
 	{
-		f->blank = 0;
-		f->sign = 0;
+		f->flags &= !(1 << BLANK);
+		f->flags &= !(1 << SIGN);
 	}
 	if (f->pre == -1)
 	{
@@ -76,5 +76,6 @@ void	ft_form_clean(t_form *f)
 				f->type != 'i' && f->type != 'd')
 			f->pre = 0;
 	}
-	f->zero = (f->left_just || f->pre > 0) ? 0 : f->zero;
+	f->flags = ((f->flags | _LEFT_JUST) || f->pre > 0) ?
+		f->flags & !(1 << ZERO) : f->flags;
 }

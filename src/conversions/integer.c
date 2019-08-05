@@ -22,7 +22,7 @@ void	ft_printf_lltoa(long long n, t_fstring *f)
 
 	f->sign = (n >= 0 ? '+' : '-');
 	if (n == LLONG_MIN)
-		f->data = ft_strdup("9223372036854775808");
+		f->partial = ft_strdup("9223372036854775808");
 	else
 	{
 		n *= (f->sign == '-' ? -1 : 1);
@@ -60,7 +60,8 @@ t_fstring	get_int_partial(t_form form, va_list *ap)
 	else if (form.lmod == 'z')
 		ft_printf_lltoa(va_arg(*ap, size_t), &f);
 	else
-		ft_printf_lltoa(va_arg(*ap, int));
+		ft_printf_lltoa(va_arg(*ap, int), &f);
+	return (f);
 }
 
 int	set_int_fstring(t_dstring *s, t_form form, va_list *ap)

@@ -12,19 +12,21 @@
 
 #include "ft_printf.h"
 #include "ft_dstring.h"
+#include "ft_string.h"
 
 int	set_char_fstring(t_dstring *s, t_form form, va_list *ap)
 {
 	t_fstring	f;
+	char		c;
 	int			len;
 
 	ft_fstring_init(&f);
 	if (form.lmod == 'l')
-		f.partial = (char *)((wchar_t)va_arg(*ap, int));
+		c = ((wchar_t)va_arg(*ap, int));
 	else
-		f.partial = (char *)((char)va_arg(*ap, int));
+		c = ((char)va_arg(*ap, int));
 	f.head = (f.pre_i = s->pos);
-	len = ft_dstr_add(s, f.partial, ft_strlen(f.partial));
+	len = ft_dstr_add(s, f.partial, ft_strlen(&c));
 	if ((f.fw = form.fw - len) > 0)
 		len += ft_printf_adjust_fw(s, f, form);
 	ft_fstring_free(&f);

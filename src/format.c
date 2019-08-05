@@ -21,14 +21,15 @@ void	format_init(t_form *format)
 	format->pre = -1;
 	format->lmod = 0;
 	format->type = 0;
-	format->cap = 0;
 }
 
 void	format_data(t_dstring *s, const char **f_string, int *i, va_list *ap)
 {
+	write(1, "[DATA]", 6);
 	t_form	format;
 
 	format_init(&format);
+	(*i)++;
 	if (is_data_flag((*f_string)[*i]))
 		set_data_flags(f_string, i, &format);
 	if (ft_isdigit((*f_string)[*i]) && (*f_string)[*i] != '0') 
@@ -49,6 +50,7 @@ void	format_data(t_dstring *s, const char **f_string, int *i, va_list *ap)
 
 void	format_color(t_dstring *s, const char **f_string, int *i, va_list *ap)
 {
+	write(1, "[COLOR]", 7);
 	va_list	empty;
 
 	va_copy(*ap, empty);
@@ -58,6 +60,7 @@ void	format_color(t_dstring *s, const char **f_string, int *i, va_list *ap)
 
 void	format_basic(t_dstring *s, const char **f_string, int *i, va_list *ap)
 {
+	write(1, "[BASIC]", 7);
 	va_list	empty;
 	char	c;
 
@@ -72,7 +75,7 @@ void	(*convert(char *format, int i))(t_dstring *, const char **,
 {
 	if (format[i] == '%')
 		return (&format_data);
-	else if (check_color_format(format, i))
+	else if (format[i] == '{')
 		return (&format_color);
 	else
 		return (&format_basic);

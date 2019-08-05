@@ -13,34 +13,37 @@
 #include "ft_printf.h"
 #include "ft_string.h"
 
-void		is_float_dne(long double n, t_fstring *f, t_form form)
+int		is_float_dne(long double n, t_fstring *f, t_form form)
 {
 	if (n == NAN)
 	{
 		if (form.flags | _CAP)
-			f->data = ft_strdup("NAN");
+			f->partial = ft_strdup("NAN");
 		else
-			f->data = ft_strdup("nan");
+			f->partial = ft_strdup("nan");
 	}
 	else if (n == NEG_INF)
 	{
 		if (form.flags | _CAP)
-			f->data = ft_strdup("-INF");
+			f->partial = ft_strdup("-INF");
 		else
-			f->data = ft_strdup("-inf");
+			f->partial = ft_strdup("-inf");
 	}
 	else if (n == INF)
 	{
 		if (form.flags | _CAP)
-			f->data = ft_stdup("INF");
+			f->partial = ft_strdup("INF");
 		else
-			f->data = ft_stdup("inf");
+			f->partial = ft_strdup("inf");
 	}
+	else
+		return (0);
 	f->alt = NULL;
 	f->pre = -1;
+	return (1);
 }
 
-void		ft_printf_ldround(f, form)
+void	ft_printf_ldround(t_fstring *f, t_form form)
 {
 	int	i;
 
@@ -54,4 +57,3 @@ void		ft_printf_ldround(f, form)
 		f->alt[i]++;
 	}
 }
-

@@ -13,7 +13,7 @@
 #include "ft_printf.h"
 #include "ft_dstring.h"
 
-int		printf_adjust_fw(t_dstring *s, t_fstring f, t_form form)
+int		ft_printf_adjust_fw(t_dstring *s, t_fstring f, t_form form)
 {
 	if (form.flags | _LEFT_JUST)
 		return (ft_dstr_add_nc(s, ' ', f.fw));

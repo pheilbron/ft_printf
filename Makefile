@@ -13,23 +13,25 @@
 NAME		= libftprintf.a
 
 SRC			= ft_printf ft_sprintf parse_data format printf_adjust_fw \
-			  printf_type convert_data \
+			  printf_type convert_data ft_fstring ft_printf_ldtoa \
+			  conversions/temp \
 			  conversions/char \
 			  conversions/chars_written \
 			  conversions/color \
+			  conversions/float \
 			  conversions/integer \
 			  conversions/mod \
 			  conversions/pointer \
 			  conversions/string \
 			  conversions/unsigned_integer
-MAIN		= test/main.c
+MAIN		= main.c
 
 SRC_DIR		= src
 OBJ_DIR		= obj
 
 OBJS		= $(patsubst %, $(OBJ_DIR)/%.o, $(SRC))
 
-MAIN_OBJ	= $(MAIN:.c=.o)
+MAIN_OBJ	= main.o
 
 AR			= ar
 CC			= gcc
@@ -45,19 +47,19 @@ $(NAME): $(OBJS)
 	@ar -x lib/libft.a && mv *.o $(OBJ_DIR)
 	@$(AR) -rcs $@ $(OBJS) $(OBJ_DIR)/*.o
 	@ranlib $(NAME)
-	@rm "__.SYMDEF SORTED"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c 
 	@echo Compiling $<.
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INC_FLAGS) -c $< -o $@
 
-test: 
-	$(CC) $(FLAGS) $(INC_FLAGS) -c $(MAIN)
-	$(CC) $(FLAGS) $(INC_FLAGS) -L. -lftprintf -o printf $(MAIN_OBJ)
+test_printf: 
+	$(CC) $(FLAGS) $(INC_FLAGS) $(DEBUG_FLAGS) -c $(MAIN)
+	$(CC) $(FLAGS) $(INC_FLAGS) $(DEBUG_FLAGS) -L. -lftprintf -o printf $(MAIN_OBJ)
 
 debug: all
-	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC_FLAGS) src/*.c src/conversions/*.c lib/*.c $(MAIN)
+	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC_FLAGS) src/*.c src/conversions/*.c lib/src/*/*.c $(MAIN)
+#	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC_FLAGS) src/*.c src/conversions/*.c lib/ctype/*.c lib/stdlib/*.c lib/stdio/*.c lib/string/*.c lib/vector/*.c lib/dstring/*.c lib/math/*.c $(MAIN)
 
 clean: clean_debug
 	make clean -C lib/

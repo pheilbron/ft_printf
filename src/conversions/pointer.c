@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "ft_string.h"
 
 int	set_pointer_fstring(t_dstring *s, t_form form, va_list *ap)
 {
@@ -19,8 +20,8 @@ int	set_pointer_fstring(t_dstring *s, t_form form, va_list *ap)
 
 	ft_fstring_init(&f);
 	form.type = 'x';
-	form.flags | _ALT = 1;
-	get_unsigned_con(form, va_arg(*ap, void *) &f);
+	form.flags |= 1 << ALT;
+	get_unsigned_con(form, (unsigned long long)va_arg(*ap, void *), &f);
 	len = 0;
 	f.head = s->pos;
 	f.pre_i = f.head + (len += ft_dstr_add(s, f.alt, ft_strlen(f.alt)));

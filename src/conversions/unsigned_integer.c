@@ -34,7 +34,7 @@ void	ft_printf_ulltoa_base(unsigned long long n, int base, int cap,
 		while (digit >= 0)
 		{
 			if (cap)
-				f->partial[i++] = values_c[n / ft_ullpow(base, digit)];
+				f->partial[i++] = c_values[n / ft_ullpow(base, digit)];
 			else
 				f->partial[i++] = values[n / ft_ullpow(base, digit)];
 			n -= (n / ft_ullpow(base, digit)) * ft_ullpow(base, digit);
@@ -48,49 +48,49 @@ void	get_unsigned_con(t_form form, unsigned long long value, t_fstring *f)
 {
 	if (form.type == 'b')
 	{
-		ft_printf_ulltoa_base(value, 2, form.cap, f);
-		if ((form.flags | _ALT) && form.cap)
-			f.alt = ft_strdup("0B");
+		ft_printf_ulltoa_base(value, 2, form.flags & 1 << CAP, f);
+		if ((form.flags | _ALT) && (form.flags & 1 << CAP))
+			f->alt = ft_strdup("0B");
 		else if (form.flags | _ALT)
-			f.alt = ft_strdup("0b");
+			f->alt = ft_strdup("0b");
 	}
 	else if (form.type == 'o')
 	{
-		ft_printf_ulltoa_base(value, 8, form.cap, f);
+		ft_printf_ulltoa_base(value, 8, form.flags & 1 << CAP, f);
 		if ((form.flags | _ALT) && f->partial[0] != '0')
-			f.alt = ft_strdup("0");
+			f->alt = ft_strdup("0");
 	}
 	else if (form.type == 'x')
 	{
-		ft_printf_ulltoa_base(value, 16, form.cap, f);
-		if ((form.flags | _ALT) && form.cap)
-			f.alt = ft_strdup("0X");
+		ft_printf_ulltoa_base(value, 16, form.flags & 1 << CAP, f);
+		if ((form.flags | _ALT) && (form.flags & 1 << CAP))
+			f->alt = ft_strdup("0X");
 		else if (form.flags | _ALT)
-			f.alt = ft_strdup("0x");
+			f->alt = ft_strdup("0x");
 	}
 	else
-		ft_printf_ulltoa_base(value, 10, form.cap, f);
+		ft_printf_ulltoa_base(value, 10, form.flags & 1 << CAP, f);
 }
 
 t_fstring	get_unsigned_partial(t_form form, va_list *ap)
 {
 	t_fstring	f;
 
-	if (f.lmod == ('h' + 'h'))
+	if (form.lmod == ('h' + 'h'))
 		get_unsigned_con(form, (unsigned char)va_arg(*ap, unsigned int), &f);
-	else if (f.lmod == 'h')
+	else if (form.lmod == 'h')
 		get_unsigned_con(form, (unsigned short)va_arg(*ap, unsigned int), &f);
-	else if (f.lmod == 'l')
+	else if (form.lmod == 'l')
 		get_unsigned_con(form, va_arg(*ap, unsigned long), &f);
-	else if (f.lmod == ('l' + 'l'))
+	else if (form.lmod == ('l' + 'l'))
 		get_unsigned_con(form, va_arg(*ap, unsigned long long), &f);
-	else if (f.lmod == 'j')
+	else if (form.lmod == 'j')
 		get_unsigned_con(form, va_arg(*ap, uintmax_t), &f);
-	else if (f.lmod == 'z')
+	else if (form.lmod == 'z')
 		get_unsigned_con(form, va_arg(*ap, size_t), &f);
 	else
 		get_unsigned_con(form, va_arg(*ap, unsigned int), &f);
-
+	return (f);
 }
 
 int set_unsigned_fstring(t_dstring *s, t_form form, va_list *ap)
@@ -104,7 +104,7 @@ int set_unsigned_fstring(t_dstring *s, t_form form, va_list *ap)
 	f.pre = form.pre - len;
 	len = 0;
 	f.head = s->pos;
-	if (form.alt && ft_strcmp(f.partial, "0") != 0)
+	if ((form.flags & 1 << ALT) && ft_strcmp(f.partial, "0") != 0)
 		f.pre_i = f.head + (len += ft_dstr_add(s, f.alt, ft_strlen(f.alt)));
 	if (f.pre > 0)
 		len += ft_dstr_add_nc(s, '0', f.pre);

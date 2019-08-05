@@ -13,6 +13,8 @@
 #include "ft_printf.h"
 #include "ft_dstring.h"
 
+#include <stdio.h>
+
 int	ft_printf(const char *format, ...)
 {
 	va_list		ap;
@@ -28,7 +30,7 @@ int	ft_printf(const char *format, ...)
 		{
 			ft_dstr_add(s, (char *)format, i);
 			format += i;
-			i = 1;
+			i = 0;
 			(*convert((char *)format, i))(s, &format, &i, &ap);
 		}
 		else

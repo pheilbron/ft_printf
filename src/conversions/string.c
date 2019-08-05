@@ -26,10 +26,9 @@ int	set_string_fstring(t_dstring *s, t_form form, va_list *ap)
 		f.partial = va_arg(*ap, char *);
 	if (!f.partial)
 		f.partial = ft_strdup("(null)");
-	f.pre = form.pre - len;
 	f.head = (f.pre_i = s->pos);
-	if (f.pre > 0 && f.pre < ft_strlen(f.partial))
-		f.partial[f.pre] = '\0';
+	if (form.pre > 0 && form.pre < (int)ft_strlen(f.partial))
+		f.partial[form.pre] = '\0';
 	len = ft_dstr_add(s, f.partial, ft_strlen(f.partial));
 	if ((f.fw = form.fw - len) > 0)
 		len += ft_printf_adjust_fw(s, f, form);
