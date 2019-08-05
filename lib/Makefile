@@ -6,7 +6,7 @@
 #    By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/30 13:56:22 by pheilbro          #+#    #+#              #
-#    Updated: 2019/08/04 19:32:22 by pheilbro         ###   ########.fr        #
+#    Updated: 2019/08/04 20:46:31 by pheilbro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ CTYPE		=	ft_isspace ft_isblank ft_isalpha ft_isdigit ft_isalnum \
 STDIO		=	ft_putchar ft_putstr ft_putendl ft_putnbr ft_putchar_fd \
 				ft_putstr_fd ft_putendl_fd ft_putnbr_fd
 STDLIB		=	ft_itoa ft_atoi ft_lltoa get_next_line \
-				ft_memalloc
+				ft_memalloc ft_atoi_end
 LIST		=	ft_lstnew ft_lstdelone ft_lstdel ft_lstadd ft_lstiter \
 				ft_lstmap
 VECTOR		=	ft_vect_add ft_vect_del ft_vect_resize ft_vect_new \

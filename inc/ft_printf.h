@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:29:18 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/04 20:41:52 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/04 21:01:53 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@
 # define _BLANK 8
 # define _SIGN 16
 # define _CAP 32
+
+# define ALT 0
+# define ZERO 1
+# define LEFT_JUST 2
+# define BLANK 3
+# define SIGN 4
+# define CAP 5
 
 # define NAN (0.0 / 0)
 # define INF (1.0 / 0)
@@ -50,6 +57,12 @@ typedef struct	s_fstring
 	int		pre;
 	char	*partial;
 }				t_fstring;
+
+typedef struct	s_con
+{
+	char		type;
+	int			(*f)(t_form, va_list *);
+}				t_con;
 
 int				ft_printf(const char *format, ...);
 int				ft_sprintf(char *str, const char *format, ...);
@@ -76,5 +89,20 @@ void			(*convert(char *format, int i))
 	(t_dstring *, const char **, int *, va_list *);
 
 int				(*convert_data(char type))(t_dstring *, t_form, va_list *);
+
+//int				set_float_hex_fstring(t_dstring *s, t_form form, va_list *ap);
+int				set_char_fstring(t_dstring *s, t_form form, va_list *ap);
+int				set_int_fstring(t_dstring *s, t_form form, va_list *ap);
+//int				set_e_notation_fstring(t_dstring *s, t_form form, va_list *ap);
+//int				set_float_fstring(t_dstring *s, t_form form, va_list *ap);
+//int				set_choose_float_fstring(t_dstring *s, t_form form, va_list *ap);
+//int				set_date_fstring(t_dstring *s, t_form form, va_list *ap);
+//int				set_error_code_fstring(t_dstring *s, t_form form, va_list *ap);
+int				get_chars_written(t_dstring *s, t_form form, va_list *ap);
+int				set_pointer_fstring(t_dstring *s, t_form form, va_list *ap);
+//int				set_non_print_fstring(t_dstring *s, t_form form, va_list *ap);
+int				set_string_fstring(t_dstring *s, t_form form, va_list *ap);
+int				set_unsigned_fstring(t_dstring *s, t_form form, va_list *ap);
+int				set_mod_fstring(t_dstring *s, t_form form, va_list *ap);
 
 #endif
