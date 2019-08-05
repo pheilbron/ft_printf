@@ -6,7 +6,7 @@
 #    By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/30 13:56:22 by pheilbro          #+#    #+#              #
-#    Updated: 2019/08/04 18:35:37 by pheilbro         ###   ########.fr        #
+#    Updated: 2019/08/04 19:32:22 by pheilbro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,9 @@ LIST		=	ft_lstnew ft_lstdelone ft_lstdel ft_lstadd ft_lstiter \
 				ft_lstmap
 VECTOR		=	ft_vect_add ft_vect_del ft_vect_resize ft_vect_new \
 				ft_vect_init ft_vect_free ft_vect_get ft_vect_set
-DSTRING		=	ft_dstr_add ft_dstr_add_nc ft_dstr_del ft_dstr_free ft_dstr_new \
-				ft_dstr_resize ft_dstr_init ft_dstr_insert ft_dstr_insert_nc
+DSTRING		=	ft_dstr_add ft_dstr_add_nc ft_dstr_del ft_dstr_free \
+				ft_dstr_new ft_dstr_resize ft_dstr_init ft_dstr_insert \
+				ft_dstr_insert_nc
 MATH		=	ft_pow ft_max ft_min ft_llpow ft_ullpow
 				
 OBJ_DIR		=	obj

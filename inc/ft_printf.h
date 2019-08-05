@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:29:18 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/04 18:40:51 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/04 19:39:19 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdlib.h>
 # include <wchar.h>
 # include <inttypes.h>
+
+# include "ft_dstring.h"
 
 # define _ALT 1
 # define _ZERO 2
@@ -57,6 +59,11 @@ int				is_data_conversion(char c);
 int				is_data_flag(char c);
 int				is_con_indicator(char c);
 
+void			set_data_flags(char **s, int *pos, t_form *);
+void			set_data_precision(char **s, int *pos, t_form *);
+void			set_data_lmod(char **s, int *pos, t_form *);
+void			ft_form_clean(t_form *f);
+
 int				ft_printf_adjust_fw(t_dstring *s, t_fstring f, t_form form);
 
 void			get_unsigned_con(t_form form, unsigned long long value,
@@ -64,6 +71,9 @@ void			get_unsigned_con(t_form form, unsigned long long value,
 
 void			ft_fstring_init(t_fstring *f);
 int				ft_fstring_free(t_fstring *f);
+
+void			(*convert(char *format, int i))
+	(t_dstring *, const char **, int *, va_list *);
 
 int				(*convert_data(char type))(t_dstring *, t_form, va_list *);
 

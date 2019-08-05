@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 19:30:58 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/07/30 19:55:34 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/04 18:48:28 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	set_data_lmod(const char **s, int *pos, t_form *format)
 	*pos = 0;
 }
 
-void	clean_tform(t_form *f)
+void	ft_form_clean(t_form *f)
 {
 	if (f->type >= 'A' && f->type <= 'Z')
 	{

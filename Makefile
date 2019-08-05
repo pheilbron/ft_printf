@@ -1,14 +1,27 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/08/04 19:31:10 by pheilbro          #+#    #+#              #
+#    Updated: 2019/08/04 19:34:22 by pheilbro         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME		= libftprintf.a
 
-SRC			= ft_printf ft_sprintf parse_data format aux_func conversion \
+SRC			= ft_printf ft_sprintf parse_data format printf_adjust_fw \
+			  printf_type convert_data \
 			  conversions/char \
+			  conversions/chars_written \
 			  conversions/color \
 			  conversions/integer \
 			  conversions/mod \
+			  conversions/pointer \
 			  conversions/string \
-			  conversions/unsigned_integer \
-			  conversions/get_con \
-			  conversions/get_unsigned_con
+			  conversions/unsigned_integer
 MAIN		= test/main.c
 
 SRC_DIR		= src
@@ -43,15 +56,13 @@ test:
 	$(CC) $(FLAGS) $(INC_FLAGS) -c $(MAIN)
 	$(CC) $(FLAGS) $(INC_FLAGS) -L. -lftprintf -o printf $(MAIN_OBJ)
 
-debug2: all
-	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC_FLAGS) lib/*.c test_vector.c
 debug: all
 	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC_FLAGS) src/*.c src/conversions/*.c lib/*.c $(MAIN)
 
 clean: clean_debug
 	make clean -C lib/
 	rm -rf $(OBJ_DIR)
-	rm -f $(MAIN_OBJ)	
+	rm -f $(MAIN_OBJ)
 
 clean_debug:
 	rm -f a.out

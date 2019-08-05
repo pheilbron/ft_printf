@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 18:53:05 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/02 17:05:00 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/04 19:37:17 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_printf(const char *format, ...)
 
 	va_start(ap, format);
 	i = 0;
-	s = ft_dstr_init(s);
+	s = ft_dstr_init((s = NULL));
 	while (format[i])
 	{
 		if (is_con_indicator(format[i]))
@@ -29,7 +29,7 @@ int	ft_printf(const char *format, ...)
 			ft_dstr_add(s, (char *)format, i);
 			format += i;
 			i = 1;
-			(*convert(format, i))(s, &format, &i, &ap);
+			(*convert((char *)format, i))(s, &format, &i, &ap);
 		}
 		else
 			i++;

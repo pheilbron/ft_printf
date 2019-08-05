@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 19:12:41 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/04 16:48:08 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/04 19:40:08 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	format_init(t_form *format)
 	format->cap = 0;
 }
 
-void	format_data(t_dstring *s, char **f_string, int *i, va_list *ap)
+void	format_data(t_dstring *s, const char **f_string, int *i, va_list *ap)
 {
 	t_form	format;
 
@@ -45,17 +45,26 @@ void	format_data(t_dstring *s, char **f_string, int *i, va_list *ap)
 	}
 }
 
-void	format_color(t_dstring *s, char **f_string, int *i, va_list *ap)
+void	format_color(t_dstring *s, const char **f_string, int *i, va_list *ap)
 {
+	va_list	empty;
 
+	va_copy(*a, empty);
+	va_end(empty);
+	set_color_fstring(s, f_string, pos);
 }
 
-void	format_basic(t_dstring *s, char **f_string, int *i, va_list *ap)
+void	format_basic(t_dstring *s, const char **f_string, int *i, va_list *ap)
 {
+	va_list	empty;
+
+	va_copy(*ap, empty);
+	va_end(empty);
 	(*i)++;
 }
 
-void	(*convert(char *format, int i))(t_dstring *, char **, int *, va_list *)
+void	(*convert(char *format, int i))(t_dstring *, const char **,
+		int *, va_list *)
 {
 	if (format[i] == '%')
 		return (&format_data);
@@ -64,4 +73,3 @@ void	(*convert(char *format, int i))(t_dstring *, char **, int *, va_list *)
 	else
 		return (&format_basic);
 }
-
