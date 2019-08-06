@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 10:08:46 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/04 18:13:48 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/05 20:26:46 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,28 +48,28 @@ void	get_unsigned_con(t_form form, unsigned long long value, t_fstring *f)
 {
 	if (form.type == 'b')
 	{
-		ft_printf_ulltoa_base(value, 2, form.flags & 1 << CAP, f);
-		if ((form.flags | _ALT) && (form.flags & 1 << CAP))
+		ft_printf_ulltoa_base(value, 2, form.flags & _CAP, f);
+		if ((form.flags & _ALT) && (form.flags & _CAP))
 			f->alt = ft_strdup("0B");
-		else if (form.flags | _ALT)
+		else if (form.flags & _ALT)
 			f->alt = ft_strdup("0b");
 	}
 	else if (form.type == 'o')
 	{
-		ft_printf_ulltoa_base(value, 8, form.flags & 1 << CAP, f);
-		if ((form.flags | _ALT) && f->partial[0] != '0')
+		ft_printf_ulltoa_base(value, 8, form.flags & _CAP, f);
+		if ((form.flags & _ALT) && f->partial[0] != '0')
 			f->alt = ft_strdup("0");
 	}
 	else if (form.type == 'x')
 	{
-		ft_printf_ulltoa_base(value, 16, form.flags & 1 << CAP, f);
-		if ((form.flags | _ALT) && (form.flags & 1 << CAP))
+		ft_printf_ulltoa_base(value, 16, form.flags & _CAP, f);
+		if ((form.flags & _ALT) && (form.flags & _CAP))
 			f->alt = ft_strdup("0X");
-		else if (form.flags | _ALT)
+		else if (form.flags & _ALT)
 			f->alt = ft_strdup("0x");
 	}
 	else
-		ft_printf_ulltoa_base(value, 10, form.flags & 1 << CAP, f);
+		ft_printf_ulltoa_base(value, 10, form.flags & _CAP, f);
 }
 
 t_fstring	get_unsigned_partial(t_form form, va_list *ap)
@@ -104,7 +104,7 @@ int set_unsigned_fstring(t_dstring *s, t_form form, va_list *ap)
 	f.pre = form.pre - len;
 	len = 0;
 	f.head = s->pos;
-	if ((form.flags & 1 << ALT) && ft_strcmp(f.partial, "0") != 0)
+	if ((form.flags & _ALT) && ft_strcmp(f.partial, "0") != 0)
 		f.pre_i = f.head + (len += ft_dstr_add(s, f.alt, ft_strlen(f.alt)));
 	if (f.pre > 0)
 		len += ft_dstr_add_nc(s, '0', f.pre);
@@ -112,6 +112,6 @@ int set_unsigned_fstring(t_dstring *s, t_form form, va_list *ap)
 		len += ft_dstr_add(s, f.partial, ft_strlen(f.partial));
 	if ((f.fw = form.fw - len) > 0)
 		len += ft_printf_adjust_fw(s, f, form);
-	ft_fstring_free(&f);
+//	ft_fstring_free(&f);
 	return (len);
 }

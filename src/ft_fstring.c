@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_fstring.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/05 18:55:48 by pheilbro          #+#    #+#             */
+/*   Updated: 2019/08/05 20:26:47 by pheilbro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 void	ft_fstring_init(t_fstring *f)
@@ -17,5 +29,4 @@ void	ft_fstring_free(t_fstring *f)
 		free(f->alt);
 	if (f->partial)
 		free(f->partial);
-	free(f);
 }

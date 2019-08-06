@@ -6,22 +6,13 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 16:16:24 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/07/28 08:20:07 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/05 17:01:42 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_stdlib.h"
 #include "ft_string.h"
-
-long long	ft_llpow(int base, int exp)
-{
-	long long	ret;
-
-	ret = 1;
-	while (exp-- > 0)
-		ret *= (long long)base;
-	return (ret);
-}
+#include "ft_math.h"
 
 char		*ft_lltoa(long long n)
 {

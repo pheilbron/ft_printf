@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 17:40:33 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/04 17:54:52 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/05 20:26:44 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ int	set_string_fstring(t_dstring *s, t_form form, va_list *ap)
 		f.partial = (char *)va_arg(*ap, wchar_t *);
 	else
 		f.partial = va_arg(*ap, char *);
-	if (!f.partial)
-		f.partial = ft_strdup("(null)");
-	f.head = (f.pre_i = s->pos);
-	if (form.pre > 0 && form.pre < (int)ft_strlen(f.partial))
-		f.partial[form.pre] = '\0';
-	len = ft_dstr_add(s, f.partial, ft_strlen(f.partial));
+	f.partial = (f.partial ? ft_strdup(f.partial) : ft_strdup("(null)"));
+	f.head = s->pos;
+	f.pre_i = s->pos;
+	f.pre = (form.pre >= 0 && form.pre < (int)ft_strlen(f.partial) ?
+			form.pre : ft_strlen(f.partial));
+	len = ft_dstr_add(s, f.partial, f.pre);
 	if ((f.fw = form.fw - len) > 0)
 		len += ft_printf_adjust_fw(s, f, form);
 	ft_fstring_free(&f);

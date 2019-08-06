@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 16:42:01 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/04 17:55:54 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/05 17:53:31 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ int	set_int_fstring(t_dstring *s, t_form form, va_list *ap)
 	f.pre = form.pre - len;
 	len = 0;
 	f.head = s->pos;
-	if (form.flags | _SIGN || form.flags | _BLANK)
+	if ((form.flags & _SIGN) || (form.flags & _BLANK))
 		f.pre_i = f.head + (len +=
-				ft_dstr_add(s, (form.flags | _SIGN ? &(f.sign) : " "), 1));
+				ft_dstr_add(s, (form.flags & _SIGN ? &(f.sign) : " "), 1));
 	if (f.pre > 0)
 		len += ft_dstr_add_nc(s, '0', f.pre);
 	if (!(form.pre == 0 && ft_strcmp(f.partial, "0")))

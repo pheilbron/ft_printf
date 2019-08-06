@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 18:05:40 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/04 18:19:34 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/05 18:44:51 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	set_pointer_fstring(t_dstring *s, t_form form, va_list *ap)
 
 	ft_fstring_init(&f);
 	form.type = 'x';
-	form.flags |= 1 << ALT;
+	form.flags |=  _ALT;
 	get_unsigned_con(form, (unsigned long long)va_arg(*ap, void *), &f);
 	len = 0;
 	f.head = s->pos;

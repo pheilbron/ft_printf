@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 19:30:58 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/04 21:02:41 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/05 19:33:38 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,15 @@ void	ft_form_clean(t_form *f)
 	if (f->type >= 'A' && f->type <= 'Z')
 	{
 		f->type += 'a' - 'A';
-		f->flags |= 1 << CAP;
+		f->flags |= _CAP;
 		f->lmod = (((!f->lmod || f->lmod == ('h' + 'h') ||
-				f->lmod == 'h') && f->type != 'x') ? 'l': f->lmod);
+				f->lmod == 'h') && f->type != 'x') ? 'l' : f->lmod);
 	}
 	if (!(f->type == 'a' || f->type == 'd' || f->type == 'e' || f->type == 'f'
 				|| f->type == 'f' || f->type == 'g' || f->type == 'i'))
 	{
-		f->flags &= !(1 << BLANK);
-		f->flags &= !(1 << SIGN);
+		f->flags &= ~_BLANK;
+		f->flags &= ~_SIGN;
 	}
 	if (f->pre == -1)
 	{
@@ -76,6 +76,6 @@ void	ft_form_clean(t_form *f)
 				f->type != 'i' && f->type != 'd')
 			f->pre = 0;
 	}
-	f->flags = ((f->flags | _LEFT_JUST) || f->pre > 0) ?
-		f->flags & !(1 << ZERO) : f->flags;
+	f->flags = ((f->flags & _LEFT_JUST) || f->pre > 0) ?
+		f->flags & ~_ZERO : f->flags;
 }

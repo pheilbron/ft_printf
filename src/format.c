@@ -6,13 +6,24 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 19:12:41 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/04 21:00:42 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/05 20:03:03 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "ft_ctype.h"
 #include "ft_stdlib.h"
+
+#include <stdio.h>
+void	print_form(t_form format)
+{
+	printf("ALT: %d\tZERO: %d\tLEFT_JUST: %d\tBLANK: %d\tSIGN: %d\n", 
+			format.flags & _ALT, format.flags & _ZERO,
+			format.flags & _LEFT_JUST, format.flags & _BLANK,
+			format.flags & _SIGN);
+	printf("FW: %d\tPRE: %d\tLMOD: %c\tTYPE: %c\n\n", format.fw,
+			format.pre, format.lmod, format.type);
+}
 
 void	format_init(t_form *format)
 {
@@ -25,7 +36,6 @@ void	format_init(t_form *format)
 
 void	format_data(t_dstring *s, const char **f_string, int *i, va_list *ap)
 {
-	write(1, "[DATA]", 6);
 	t_form	format;
 
 	format_init(&format);
@@ -42,6 +52,7 @@ void	format_data(t_dstring *s, const char **f_string, int *i, va_list *ap)
 	if (is_data_conversion(format.type))
 	{
 		ft_form_clean(&format);
+//		print_form(format);
 		(*convert_data)(format.type)(s, format, ap);
 		*f_string += *i + 1;
 		*i = 0;
@@ -50,7 +61,6 @@ void	format_data(t_dstring *s, const char **f_string, int *i, va_list *ap)
 
 void	format_color(t_dstring *s, const char **f_string, int *i, va_list *ap)
 {
-	write(1, "[COLOR]", 7);
 	va_list	empty;
 
 	va_copy(*ap, empty);
@@ -60,7 +70,6 @@ void	format_color(t_dstring *s, const char **f_string, int *i, va_list *ap)
 
 void	format_basic(t_dstring *s, const char **f_string, int *i, va_list *ap)
 {
-	write(1, "[BASIC]", 7);
 	va_list	empty;
 	char	c;
 
