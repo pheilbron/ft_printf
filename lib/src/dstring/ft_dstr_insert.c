@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 18:27:48 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/04 18:31:40 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/06 14:40:21 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_dstr_insert(t_dstring *s, char *new_data, size_t len, size_t pos)
 {
 	if (s->cap < s->pos + len + 1)
 		ft_dstr_resize(s, s->cap * 2 + (s->cap >= len + 1 ? 0 : len + 1));
-	ft_memcpy(s->buf + pos + len , s->buf + pos, len);
+	ft_memmove(s->buf + pos + len , s->buf + pos, s->pos - pos);
 	ft_memcpy(s->buf + pos, new_data, len);
 	s->buf[s->pos + len] = '\0';
 	s->pos += len;

@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 10:08:46 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/05 20:26:46 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/06 15:21:31 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "ft_string.h"
 #include "ft_math.h"
 
+
+#include <stdio.h>
 void	ft_printf_ulltoa_base(unsigned long long n, int base, int cap,
 		t_fstring *f)
 {
@@ -108,10 +110,10 @@ int set_unsigned_fstring(t_dstring *s, t_form form, va_list *ap)
 		f.pre_i = f.head + (len += ft_dstr_add(s, f.alt, ft_strlen(f.alt)));
 	if (f.pre > 0)
 		len += ft_dstr_add_nc(s, '0', f.pre);
-	if (!(form.pre == 0 && ft_strcmp(f.partial, "0")))
+	if (!(form.pre == 0 && ft_strcmp(f.partial, "0") == 0))
 		len += ft_dstr_add(s, f.partial, ft_strlen(f.partial));
 	if ((f.fw = form.fw - len) > 0)
 		len += ft_printf_adjust_fw(s, f, form);
-//	ft_fstring_free(&f);
+	ft_fstring_free(&f);
 	return (len);
 }

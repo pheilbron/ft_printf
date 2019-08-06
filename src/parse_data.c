@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 19:30:58 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/05 19:33:38 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/06 15:01:29 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ void	ft_form_clean(t_form *f)
 				f->type != 'i' && f->type != 'd')
 			f->pre = 0;
 	}
+	if (f->type != 'b' && f->type != 'o' && f->type != 'x' && f->type != 'a' &&
+			f->type != 'e' && f->type != 'f' && f->type != 'g')
+		f->flags &= ~_ALT;
 	f->flags = ((f->flags & _LEFT_JUST) || f->pre > 0) ?
 		f->flags & ~_ZERO : f->flags;
 }
