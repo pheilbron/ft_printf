@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 10:08:46 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/06 15:21:31 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/06 16:04:34 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	ft_printf_ulltoa_base(unsigned long long n, int base, int cap,
 
 void	get_unsigned_con(t_form form, unsigned long long value, t_fstring *f)
 {
+	f->alt = NULL;
 	if (form.type == 'b')
 	{
 		ft_printf_ulltoa_base(value, 2, form.flags & _CAP, f);
