@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 16:42:01 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/06 15:18:29 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/06 16:22:11 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ t_fstring	get_int_partial(t_form form, va_list *ap)
 		ft_printf_lltoa(va_arg(*ap, size_t), &f);
 	else
 		ft_printf_lltoa(va_arg(*ap, int), &f);
+	f.alt = NULL;
 	return (f);
 }
 
