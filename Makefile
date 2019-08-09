@@ -47,7 +47,7 @@ $(NAME): $(OBJS)
 	@ar -x lib/libft.a && mv *.o $(OBJ_DIR)
 	@$(AR) -rcs $@ $(OBJS) $(OBJ_DIR)/*.o
 	@ranlib $(NAME)
-	@rm -f "__.SYMDEF"
+	@rm -f "__.SYMDEF SORTED"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c 
 	@echo Compiling $<.
