@@ -6,7 +6,7 @@
 #    By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/04 19:31:10 by pheilbro          #+#    #+#              #
-#    Updated: 2019/08/06 21:25:23 by pheilbro         ###   ########.fr        #
+#    Updated: 2019/08/26 12:58:06 by pheilbro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,16 +35,16 @@ MAIN_OBJ	= main.o
 
 AR			= ar
 CC			= gcc
-LIB			= -Llib -lft
-INC_FLAGS	= -I inc -I lib/inc
+LIB			= -l../libft -lft
+INC_FLAGS	= -I inc -I ../libft/inc
 CFLAGS		= -Wall -Werror -Wextra
 DEBUG_FLAGS	= -g -fsanitize=address
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@make -C lib/
-	@ar -x lib/libft.a && mv *.o $(OBJ_DIR)
+	@make -C ../libft/
+	@ar -x ../libft/libft.a && mv *.o $(OBJ_DIR)
 	@$(AR) -rcs $@ $(OBJS) $(OBJ_DIR)/*.o
 	@ranlib $(NAME)
 	@rm -f "__.SYMDEF SORTED"
