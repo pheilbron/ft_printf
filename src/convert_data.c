@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 18:56:51 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/29 09:14:27 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/29 15:11:41 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		(*convert_data(char type))(t_dstring *, t_form, va_list *)
 		{'d', &set_int_fstring}, {'e', &set_e_notation_fstring},
 		{'f', &set_float_fstring}, {'g', &set_choose_float_fstring},
 		{'i', &set_int_fstring}, {'k', &set_date_fstring},
-		{'m', &set_error_code_fstring}, {'n', &get_chars_written},
+		{'n', &get_chars_written},
 		{'o', &set_unsigned_fstring}, {'p', &set_pointer_fstring},
 		{'r', &set_non_print_fstring}, {'s', &set_string_fstring},
 		{'u', &set_unsigned_fstring}, {'x', &set_unsigned_fstring},

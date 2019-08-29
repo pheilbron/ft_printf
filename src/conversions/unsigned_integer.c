@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 10:08:46 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/29 09:08:17 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/29 14:00:21 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,25 +74,22 @@ void		get_unsigned_con(t_form form, unsigned long long value,
 		ft_printf_ulltoa_base(value, 10, form.flags & _CAP, f);
 }
 
-t_fstring	get_unsigned_partial(t_form form, va_list *ap)
+void		get_unsigned_partial(t_fstring *f, t_form form, va_list *ap)
 {
-	t_fstring	f;
-
 	if (form.lmod == ('h' + 'h'))
-		get_unsigned_con(form, (unsigned char)va_arg(*ap, unsigned int), &f);
+		get_unsigned_con(form, (unsigned char)va_arg(*ap, unsigned int), f);
 	else if (form.lmod == 'h')
-		get_unsigned_con(form, (unsigned short)va_arg(*ap, unsigned int), &f);
+		get_unsigned_con(form, (unsigned short)va_arg(*ap, unsigned int), f);
 	else if (form.lmod == 'l')
-		get_unsigned_con(form, va_arg(*ap, unsigned long), &f);
+		get_unsigned_con(form, va_arg(*ap, unsigned long), f);
 	else if (form.lmod == ('l' + 'l'))
-		get_unsigned_con(form, va_arg(*ap, unsigned long long), &f);
+		get_unsigned_con(form, va_arg(*ap, unsigned long long), f);
 	else if (form.lmod == 'j')
-		get_unsigned_con(form, va_arg(*ap, uintmax_t), &f);
+		get_unsigned_con(form, va_arg(*ap, uintmax_t), f);
 	else if (form.lmod == 'z')
-		get_unsigned_con(form, va_arg(*ap, size_t), &f);
+		get_unsigned_con(form, va_arg(*ap, size_t), f);
 	else
-		get_unsigned_con(form, va_arg(*ap, unsigned int), &f);
-	return (f);
+		get_unsigned_con(form, va_arg(*ap, unsigned int), f);
 }
 
 int			set_unsigned_fstring(t_dstring *s, t_form form, va_list *ap)
@@ -101,7 +98,7 @@ int			set_unsigned_fstring(t_dstring *s, t_form form, va_list *ap)
 	int			len;
 
 	ft_fstring_init(&f);
-	f = get_unsigned_partial(form, ap);
+	get_unsigned_partial(&f, form, ap);
 	len = ft_strlen(f.partial);
 	f.pre = form.pre - len;
 	len = 0;

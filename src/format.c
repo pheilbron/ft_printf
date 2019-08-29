@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 19:12:41 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/29 09:13:02 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/29 14:42:25 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	format_color(t_dstring *s, const char **f_string, int *i, va_list *ap)
 {
 	va_list	empty;
 
-	va_copy(*ap, empty);
+	va_copy(empty, *ap);
 	va_end(empty);
 	set_color_fstring(s, f_string, i);
 }
@@ -61,7 +61,7 @@ void	format_basic(t_dstring *s, const char **f_string, int *i, va_list *ap)
 	va_list	empty;
 	char	c;
 
-	va_copy(*ap, empty);
+	va_copy(empty, *ap);
 	va_end(empty);
 	c = s->pos + (**f_string);
 	(*i)++;

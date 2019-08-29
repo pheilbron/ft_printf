@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 16:42:01 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/29 10:39:46 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/29 13:58:30 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,31 @@ void		ft_printf_lltoa(long long n, t_fstring *f)
 	}
 }
 
-t_fstring	get_int_partial(t_form form, va_list *ap)
+void		get_int_partial(t_fstring *f, t_form form, va_list *ap)
 {
-	t_fstring	f;
-
 	if (form.lmod == ('h' + 'h'))
-		ft_printf_lltoa((signed char)va_arg(*ap, int), &f);
+		ft_printf_lltoa((signed char)va_arg(*ap, int), f);
 	else if (form.lmod == 'h')
-		ft_printf_lltoa((short)va_arg(*ap, int), &f);
+		ft_printf_lltoa((short)va_arg(*ap, int), f);
 	else if (form.lmod == 'l')
-		ft_printf_lltoa(va_arg(*ap, long), &f);
+		ft_printf_lltoa(va_arg(*ap, long), f);
 	else if (form.lmod == ('l' + 'l'))
-		ft_printf_lltoa(va_arg(*ap, long long), &f);
+		ft_printf_lltoa(va_arg(*ap, long long), f);
 	else if (form.lmod == 'j')
-		ft_printf_lltoa(va_arg(*ap, intmax_t), &f);
+		ft_printf_lltoa(va_arg(*ap, intmax_t), f);
 	else if (form.lmod == 'z')
-		ft_printf_lltoa(va_arg(*ap, size_t), &f);
+		ft_printf_lltoa(va_arg(*ap, size_t), f);
 	else
-		ft_printf_lltoa(va_arg(*ap, int), &f);
-	f.alt = NULL;
-	return (f);
+		ft_printf_lltoa(va_arg(*ap, int), f);
+	f->alt = NULL;
+}
+
+#include <stdio.h>
+
+void	print_fstring(t_fstring f)
+{
+	printf("\n\nHEAD: %d\tSIGN: %c\nPRE_I: %d\tPRE: %d\tFW: %d\n", f.head,
+			f.sign, f.pre_i, f.pre, f.fw);
 }
 
 int			set_int_fstring(t_dstring *s, t_form form, va_list *ap)
@@ -71,7 +76,7 @@ int			set_int_fstring(t_dstring *s, t_form form, va_list *ap)
 	int			len;
 
 	ft_fstring_init(&f);
-	f = get_int_partial(form, ap);
+	get_int_partial(&f, form, ap);
 	len = ft_strlen(f.partial);
 	f.pre = form.pre - len;
 	len = 0;

@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:29:18 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/28 18:58:14 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/29 15:12:06 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,6 @@ int				set_float_fstring(t_dstring *s, t_form form, va_list *ap);
 int				set_choose_float_fstring(t_dstring *s,
 		t_form form, va_list *ap);
 int				set_date_fstring(t_dstring *s, t_form form, va_list *ap);
-int				set_error_code_fstring(t_dstring *s,
-		t_form form, va_list *ap);
 int				get_chars_written(t_dstring *s, t_form form, va_list *ap);
 int				set_pointer_fstring(t_dstring *s, t_form form, va_list *ap);
 int				set_non_print_fstring(t_dstring *s,

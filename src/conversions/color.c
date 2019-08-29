@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 19:14:21 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/29 09:02:45 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/29 14:59:52 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,19 @@
 int	set_color_fstring(t_dstring *s, const char **f_string, int *pos)
 {
 	int				i;
-	const t_color	color_tab[] = {{"{blk}", "\x1b[38;5;0]"},
-		{"{red}", "\x1b[38;5;1]"}, {"{grn}", "\x1b[38;5;2]"},
-		{"{yel}", "\x1b[38;5;3]"}, {"{blu}", "\x1b[38;5;4]"},
-		{"{mag}", "\x1b[38;5;5]"}, {"{cyn}", "\x1b[38;5;6]"},
-		{"{whi}", "\x1b[38;5;7]"}, {"{eoc}", "\x1b[38;5;0]"},
+	const t_color	color_tab[] = {{"{red}", "\x1b[31m"},
+		{"{grn}", "\x1b[32m"}, {"{yel}", "\x1b[33m"},
+		{"{blu}", "\x1b[34m"}, {"{mag}", "\x1b[35m"},
+		{"{cyn}", "\x1b[36m"}, {"{eoc}", "\x1b[0m"},
 		{NULL, NULL}};
 
 	i = 0;
-	while (i < 9 && ft_memcmp(*f_string, color_tab[i].type, 5) != 0)
+	while (color_tab[i].type && ft_memcmp(*f_string, color_tab[i].type, 5) != 0)
 		i++;
-	if (i < 9)
+	if (color_tab[i].type)
 	{
 		(*f_string) += 5;
-		return (ft_dstr_add(s, color_tab[i].escape_code, 8));
+		return (ft_dstr_add(s, color_tab[i].escape_code, (i != 7 ? 5 : 4)));
 	}
 	(*pos)++;
 	return (0);
