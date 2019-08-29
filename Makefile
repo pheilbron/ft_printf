@@ -6,7 +6,7 @@
 #    By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/04 19:31:10 by pheilbro          #+#    #+#              #
-#    Updated: 2019/08/28 15:24:15 by pheilbro         ###   ########.fr        #
+#    Updated: 2019/08/28 20:20:49 by pheilbro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ CC			= gcc
 LIB			= -l../libft -lft
 INC_FLAGS	= -I inc -I ../libft/inc
 CFLAGS		= -Wall -Werror -Wextra
-DEBUG_FLAGS	= -fsanitize=address #-g 
+DEBUG_FLAGS	= -fsanitize=address -g 
 
 all: $(NAME)
 
@@ -63,7 +63,7 @@ debug: all
 #	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(INC_FLAGS) src/*.c src/conversions/*.c lib/ctype/*.c lib/stdlib/*.c lib/stdio/*.c lib/string/*.c lib/vector/*.c lib/dstring/*.c lib/math/*.c $(MAIN)
 
 clean: clean_debug
-	make clean -C lib/
+	#make clean -C lib/
 	rm -rf $(OBJ_DIR)
 	rm -f $(MAIN_OBJ)
 
@@ -72,7 +72,7 @@ clean_debug:
 	rm -rf a.out.dSYM 
 
 fclean: clean clean_debug
-	make fclean -C lib/
+	#make fclean -C lib/
 	rm -f $(NAME)
 
 re: fclean all
