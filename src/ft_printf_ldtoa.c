@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 12:21:10 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/05 19:01:12 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/28 18:12:32 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,11 @@ int		is_float_dne(long double n, t_fstring *f, t_form form)
 	if (n != NAN && n != INF && n != NEG_INF)
 		return (0);
 	if (n == NAN)
-	{
-		if (form.flags | _CAP)
-			f->partial = ft_strdup("NAN");
-		else
-			f->partial = ft_strdup("nan");
-	}
+		f->partial = ft_strdup((form.flags | _CAP ? "NAN" : "nan"));
 	else if (n == NEG_INF)
-	{
-		if (form.flags | _CAP)
-			f->partial = ft_strdup("-INF");
-		else
-			f->partial = ft_strdup("-inf");
-	}
+		f->partial = ft_strdup((form.flags | _CAP) ? "-INF" : "-inf");
 	else if (n == INF)
-	{
-		if (form.flags | _CAP)
-			f->partial = ft_strdup("INF");
-		else
-			f->partial = ft_strdup("inf");
-	}
+		f->partial = ft_strdup((form.flags | _CAP) ? "INF": "inf");
 	f->pre = -1;
 	return (1);
 }
