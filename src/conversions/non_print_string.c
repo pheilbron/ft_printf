@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/29 09:23:10 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/29 10:05:04 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/29 10:54:15 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*get_non_print_partial(char *s)
 	return (ft_dstr_release(temp));
 }
 
-int	set_non_print_fstring(t_dstring *s, t_form form, va_list *ap)
+int		set_non_print_fstring(t_dstring *s, t_form form, va_list *ap)
 {
 	t_fstring	f;
 	int			len;
