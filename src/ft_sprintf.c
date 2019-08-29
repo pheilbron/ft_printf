@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 17:03:48 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/04 19:41:05 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/28 13:23:51 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_sprintf(char *str, const char *format, ...)
 
 	va_start(ap, format);
 	i = 0;
-	s = ft_dstr_init((s = NULL));
+	s = ft_dstr_init();
 	while (format[i])
 	{
 		if (is_con_indicator(format[i]))
