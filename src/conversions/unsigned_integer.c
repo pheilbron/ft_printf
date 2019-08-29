@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 10:08:46 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/06 16:04:34 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/28 20:12:56 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 #include "ft_string.h"
 #include "ft_math.h"
 
-
-#include <stdio.h>
-void	ft_printf_ulltoa_base(unsigned long long n, int base, int cap,
+void		ft_printf_ulltoa_base(unsigned long long n, int base, int cap,
 		t_fstring *f)
 {
 	int		digit;
@@ -46,7 +44,8 @@ void	ft_printf_ulltoa_base(unsigned long long n, int base, int cap,
 	}
 }
 
-void	get_unsigned_con(t_form form, unsigned long long value, t_fstring *f)
+void		get_unsigned_con(t_form form, unsigned long long value,
+		t_fstring *f)
 {
 	f->alt = NULL;
 	if (form.type == 'b')
@@ -96,7 +95,7 @@ t_fstring	get_unsigned_partial(t_form form, va_list *ap)
 	return (f);
 }
 
-int set_unsigned_fstring(t_dstring *s, t_form form, va_list *ap)
+int 	set_unsigned_fstring(t_dstring *s, t_form form, va_list *ap)
 {
 	t_fstring	f;
 	int			len;

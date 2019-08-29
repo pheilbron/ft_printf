@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 18:29:18 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/06 14:55:08 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/28 18:58:14 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int				is_data_flag(char c);
 int				is_con_indicator(char c);
 int				is_float_dne(long double n, t_fstring *f, t_form form);
 
-void			ft_printf_ldround(t_fstring *f, int i);
+int				ft_printf_ldround(t_fstring *f, int i);
 
 void			set_data_flags(const char **s, int *pos, t_form *form);
 void			set_data_precision(const char **s, int *pos, t_form *form);

@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 12:21:10 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/28 18:12:32 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/28 18:55:22 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,16 @@ int		is_float_dne(long double n, t_fstring *f, t_form form)
 	return (1);
 }
 
-void	ft_printf_ldround(t_fstring *f, int i)
+int		ft_printf_ldround(t_fstring *f, int i)
 {
 	(f->alt[i])++;
-	while (i >= 0 && f->alt[i] >= '5')
+	while (i >= 0 && f->alt[i] == '9' + 1)
 	{
-		if (f->alt[i] == '9' + 1)
-			f->alt[i] = '0';
+		f->alt[i] = '0';
 		i--;
 		(f->alt[i])++;
 	}
+	if (i < 0)
+		return (1);
+	return (0);
 }
