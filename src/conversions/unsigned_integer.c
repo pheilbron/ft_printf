@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 10:08:46 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/29 14:00:21 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/29 15:38:45 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void		get_unsigned_con(t_form form, unsigned long long value,
 	else if (form.type == 'o')
 	{
 		ft_printf_ulltoa_base(value, 8, form.flags & _CAP, f);
-		if ((form.flags & _ALT) && f->partial[0] != '0')
+		if ((form.flags & _ALT) && (f->partial[0] != '0' || form.pre == 0))
 			f->alt = ft_strdup("0");
 	}
 	else if (form.type == 'x')
@@ -103,7 +103,8 @@ int			set_unsigned_fstring(t_dstring *s, t_form form, va_list *ap)
 	f.pre = form.pre - len;
 	len = 0;
 	f.head = s->pos;
-	if ((form.flags & _ALT) && ft_strcmp(f.partial, "0") != 0)
+	if ((form.flags & _ALT) && (ft_strcmp(f.partial, "0") != 0 ||
+				(form.type == 'o' && form.pre == 0)))
 		f.pre_i = f.head + (len += ft_dstr_add(s, f.alt, ft_strlen(f.alt)));
 	if (f.pre > 0)
 		len += ft_dstr_add_nc(s, '0', f.pre);
