@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 12:21:10 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/28 18:55:22 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/29 09:17:38 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		is_float_dne(long double n, t_fstring *f, t_form form)
 	else if (n == NEG_INF)
 		f->partial = ft_strdup((form.flags | _CAP) ? "-INF" : "-inf");
 	else if (n == INF)
-		f->partial = ft_strdup((form.flags | _CAP) ? "INF": "inf");
+		f->partial = ft_strdup((form.flags | _CAP) ? "INF" : "inf");
 	f->pre = -1;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 19:30:58 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/28 20:07:52 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/29 09:18:23 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,9 @@ void	ft_form_clean(t_form *f)
 		f->flags &= ~_BLANK;
 		f->flags &= ~_SIGN;
 	}
-	if (f->pre == -1)
-	{
-		if (f->type == 'f' || f->type == 'g' || f->type == 'f'
-				|| f->type == 'a')
-			f->pre = 6;
-	}
+	if (f->pre == -1 && (f->type == 'f' || f->type == 'g' || f->type == 'f'
+				|| f->type == 'a'))
+		f->pre = 6;
 	if (f->type != 'b' && f->type != 'o' && f->type != 'x' && f->type != 'a' &&
 			f->type != 'e' && f->type != 'f' && f->type != 'g')
 		f->flags &= ~_ALT;

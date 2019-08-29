@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 17:51:03 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/04 17:55:12 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/29 09:13:50 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	set_mod_fstring(t_dstring *s, t_form form, va_list *ap)
 	va_list		empty;
 
 	ft_fstring_init(&f);
-	f.head = (f.pre_i = s->pos);
+	f.pre_i = s->pos;
+	f.head = s->pos;
 	va_copy(empty, *ap);
 	len = ft_dstr_add(s, "%", 1);
 	if ((f.fw = form.fw - len) > 0)

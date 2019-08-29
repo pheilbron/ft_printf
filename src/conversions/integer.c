@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 16:42:01 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/06 16:22:11 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/29 10:39:46 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "ft_math.h"
 #include "ft_dstring.h"
 
-void	ft_printf_lltoa(long long n, t_fstring *f)
+void		ft_printf_lltoa(long long n, t_fstring *f)
 {
 	int		digit;
 	int		i;
@@ -65,13 +65,14 @@ t_fstring	get_int_partial(t_form form, va_list *ap)
 	return (f);
 }
 
-int	set_int_fstring(t_dstring *s, t_form form, va_list *ap)
+int			set_int_fstring(t_dstring *s, t_form form, va_list *ap)
 {
 	t_fstring	f;
 	int			len;
 
 	ft_fstring_init(&f);
-	len = ft_strlen((f = get_int_partial(form, ap)).partial);
+	f = get_int_partial(form, ap);
+	len = ft_strlen(f.partial);
 	f.pre = form.pre - len;
 	len = 0;
 	f.head = s->pos;

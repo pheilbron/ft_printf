@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 10:08:46 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/28 20:12:56 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/29 09:08:17 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,14 @@ t_fstring	get_unsigned_partial(t_form form, va_list *ap)
 	return (f);
 }
 
-int 	set_unsigned_fstring(t_dstring *s, t_form form, va_list *ap)
+int			set_unsigned_fstring(t_dstring *s, t_form form, va_list *ap)
 {
 	t_fstring	f;
 	int			len;
 
-
 	ft_fstring_init(&f);
-	len = ft_strlen((f = get_unsigned_partial(form, ap)).partial);
+	f = get_unsigned_partial(form, ap);
+	len = ft_strlen(f.partial);
 	f.pre = form.pre - len;
 	len = 0;
 	f.head = s->pos;

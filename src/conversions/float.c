@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 12:07:48 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/28 20:03:25 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/29 09:10:40 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "ft_string.h"
 #include "ft_math.h"
 
-#include <stdio.h>
 void	ft_printf_ldtoa(long double n, t_fstring *f, t_form form)
 {
 	long double	decimal;
@@ -63,7 +62,7 @@ void	ft_printf_dtoa(double n, t_fstring *f, t_form form)
 	}
 }
 
-int set_float_fstring(t_dstring *s, t_form form, va_list *ap)
+int		set_float_fstring(t_dstring *s, t_form form, va_list *ap)
 {
 	t_fstring	f;
 	int			len;

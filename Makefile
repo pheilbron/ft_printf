@@ -6,7 +6,7 @@
 #    By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/04 19:31:10 by pheilbro          #+#    #+#              #
-#    Updated: 2019/08/28 20:20:49 by pheilbro         ###   ########.fr        #
+#    Updated: 2019/08/29 09:54:48 by pheilbro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC			= ft_printf ft_sprintf parse_data format printf_adjust_fw \
 			  conversions/float \
 			  conversions/integer \
 			  conversions/mod \
+			  conversions/non_print_string \
 			  conversions/pointer \
 			  conversions/string \
 			  conversions/unsigned_integer
