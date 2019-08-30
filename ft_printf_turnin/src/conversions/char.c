@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sprintf.c                                       :+:      :+:    :+:   */
+/*   char.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/02 17:03:48 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/30 10:46:10 by pheilbro         ###   ########.fr       */
+/*   Created: 2019/08/04 17:36:30 by pheilbro          #+#    #+#             */
+/*   Updated: 2019/08/29 09:09:20 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,22 @@
 #include "ft_dstring.h"
 #include "ft_string.h"
 
-int	ft_sprintf(char *str, const char *format, ...)
+int	set_char_fstring(t_dstring *s, t_form form, va_list *ap)
 {
-	va_list		ap;
-	int			i;
-	t_dstring	*s;
+	t_fstring	f;
+	char		c;
+	int			len;
 
-	va_start(ap, format);
-	i = 0;
-	s = ft_dstr_init();
-	while (format[i])
-	{
-		if (is_con_indicator(format[i]))
-		{
-			ft_dstr_add(s, (char *)format, i);
-			format += i;
-			i = 0;
-			(*convert((char *)format, i))(s, &format, &i, &ap);
-		}
-		else
-			i++;
-	}
-	ft_dstr_add(s, (char *)format, i);
-	ft_memcpy(str, s->buf, s->pos);
-	str[s->pos] = '\0';
-	va_end(ap);
-	return (ft_dstr_free(s));
+	ft_fstring_init(&f);
+	if (form.lmod == 'l')
+		c = ((wchar_t)va_arg(*ap, int));
+	else
+		c = ((char)va_arg(*ap, int));
+	f.pre_i = s->pos;
+	f.head = s->pos;
+	f.partial = &c;
+	len = ft_dstr_add(s, f.partial, sizeof(*f.partial));
+	if ((f.fw = form.fw - len) > 0)
+		len += ft_printf_adjust_fw(s, f, form);
+	return (len);
 }

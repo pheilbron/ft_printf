@@ -6,7 +6,7 @@
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 17:03:48 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/30 10:46:10 by pheilbro         ###   ########.fr       */
+/*   Updated: 2019/08/30 10:45:56 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_sprintf(char *str, const char *format, ...)
 			ft_dstr_add(s, (char *)format, i);
 			format += i;
 			i = 0;
-			(*convert((char *)format, i))(s, &format, &i, &ap);
+			(*g_convert((char *)format, i))(s, &format, &i, &ap);
 		}
 		else
 			i++;

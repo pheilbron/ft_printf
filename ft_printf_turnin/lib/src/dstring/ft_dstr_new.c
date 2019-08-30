@@ -1,43 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sprintf.c                                       :+:      :+:    :+:   */
+/*   ft_dstr_new.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/02 17:03:48 by pheilbro          #+#    #+#             */
-/*   Updated: 2019/08/30 10:46:10 by pheilbro         ###   ########.fr       */
+/*   Created: 2019/07/28 07:59:40 by pheilbro          #+#    #+#             */
+/*   Updated: 2019/07/28 22:49:16 by pheilbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
 #include "ft_dstring.h"
 #include "ft_string.h"
+#include "ft_stdlib.h"
 
-int	ft_sprintf(char *str, const char *format, ...)
+t_dstring	*ft_dstr_new(char *data, size_t len, size_t cap)
 {
-	va_list		ap;
-	int			i;
 	t_dstring	*s;
 
-	va_start(ap, format);
-	i = 0;
-	s = ft_dstr_init();
-	while (format[i])
+	if ((s = malloc(sizeof(*s))))
 	{
-		if (is_con_indicator(format[i]))
+		if ((s->buf = ft_memalloc(sizeof(*data) * (cap + 1))))
 		{
-			ft_dstr_add(s, (char *)format, i);
-			format += i;
-			i = 0;
-			(*convert((char *)format, i))(s, &format, &i, &ap);
+			ft_memcpy(s->buf, data, len);
+			s->buf[len] = '\0';
+			s->cap = cap;
+			s->pos = len;
+			return (s);
 		}
-		else
-			i++;
 	}
-	ft_dstr_add(s, (char *)format, i);
-	ft_memcpy(str, s->buf, s->pos);
-	str[s->pos] = '\0';
-	va_end(ap);
-	return (ft_dstr_free(s));
+	return (NULL);
 }
