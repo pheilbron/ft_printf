@@ -6,18 +6,19 @@
 #    By: pheilbro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/04 19:31:10 by pheilbro          #+#    #+#              #
-#    Updated: 2019/08/29 09:54:48 by pheilbro         ###   ########.fr        #
+#    Updated: 2019/08/29 18:24:33 by pheilbro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= libftprintf.a
 
 SRC			= ft_printf ft_sprintf parse_data format printf_adjust_fw \
-			  printf_type convert_data ft_fstring ft_printf_ldtoa \
+			  printf_type convert_data ft_fstring ft_printf_ldtoa ft_dstr_fadd \
 			  conversions/temp \
 			  conversions/char \
 			  conversions/chars_written \
 			  conversions/color \
+			  conversions/date \
 			  conversions/float \
 			  conversions/integer \
 			  conversions/mod \
@@ -38,7 +39,7 @@ AR			= ar
 CC			= gcc
 LIB			= -l../libft -lft
 INC_FLAGS	= -I inc -I ../libft/inc
-CFLAGS		= -Wall -Werror -Wextra
+CFLAGS		= -Wall -Werror -Wextra 
 DEBUG_FLAGS	= -fsanitize=address -g 
 
 all: $(NAME)
